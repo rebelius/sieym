@@ -11,6 +11,6 @@ class Producto {
 	String nombre
 	
 	public float calcularCoeficienteProduccion(Fase fase) {
-		composicion.sum({it.materiaPrima.coeficienteProduccion[fase.nombre].valor * (it.porcentaje / 100)})
+		composicion.sum({it.materiaPrima.coeficiente(fase) * (it.porcentaje / 100)})
 	}
 }

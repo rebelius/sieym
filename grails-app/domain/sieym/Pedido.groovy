@@ -25,14 +25,12 @@ class Pedido {
 	List items
 
 	public float calcularCoeficienteProduccion(Fase fase) {
-    	println items.collect({it.producto.calcularCoeficienteProduccion(fase)})
 		items.sum({it.producto.calcularCoeficienteProduccion(fase)})
 	}
 	
 	public Duration calcularDuracion(Maquina mq){
 		long d = mq.fase.duracion.millis * mq.rendimiento * this.calcularCoeficienteProduccion(mq.fase)
 		new Duration(d)
-//		d.trunc(2)
 	}
 	
 	public Duration calcularDuracion(List<Maquina> mqs){

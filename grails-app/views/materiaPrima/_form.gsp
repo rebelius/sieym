@@ -33,7 +33,7 @@
 		<label for="coeficienteProduccion[${fase.nombre}]">
 			${fase.nombre}:
 		</label>
-		<g:field type="number" step="0.1" name="coeficienteProduccion[${fase.nombre}]" required=""
+		<g:field type="number" step="0.01" name="coeficienteProduccion[${fase.nombre}]" required=""
 			value="${materiaPrimaInstance.coeficienteProduccion[fase.nombre]}" />
 	</div>
 </g:each>

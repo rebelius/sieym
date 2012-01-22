@@ -4,9 +4,8 @@ class MateriaPrima {
 
     static constraints = {
 		coeficienteProduccion nullable: true
+		descripcion nullable: true
     }
-
-//	static hasMany = [coeficienteProduccion: CoeficienteProduccion]
 
 	Map coeficienteProduccion
 	String nombre
@@ -14,5 +13,9 @@ class MateriaPrima {
 
 	public String toString() {
 		nombre
+	}
+	
+	public coeficiente(Fase fase) {
+		this.coeficienteProduccion[fase.nombre] as Float
 	}
 }

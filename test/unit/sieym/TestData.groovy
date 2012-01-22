@@ -35,10 +35,10 @@ class TestData {
 	public List createProductos() {
 		if(!this.productos) {
 			this.createFases()
-			MateriaPrima mp1 = this.createMateriaPrima("MP1", [12, 25, 32])
-			MateriaPrima mp2 = this.createMateriaPrima("MP2", [13, 26, 9])
-			MateriaPrima mp3 = this.createMateriaPrima("MP3", [15, 21, 25])
-			MateriaPrima mp4 = this.createMateriaPrima("MP4", [11, 28, 19])
+			MateriaPrima mp1 = this.createMateriaPrima("MP1", ['12', '25', '32'])
+			MateriaPrima mp2 = this.createMateriaPrima("MP2", ['13', '26', '9'])
+			MateriaPrima mp3 = this.createMateriaPrima("MP3", ['15', '21', '25'])
+			MateriaPrima mp4 = this.createMateriaPrima("MP4", ['11', '28', '19'])
 
 			Producto pA = new Producto(nombre: "Producto A", composicion:
 					[
@@ -73,9 +73,9 @@ class TestData {
 	}
 
 	private MateriaPrima createMateriaPrima(String nombre, List cpValues) {
-		Map cp = [(this.fases[0].nombre): new CoeficienteProduccion(fase: this.fases[0], valor: cpValues[0]),
-					(this.fases[1].nombre): new CoeficienteProduccion(fase: this.fases[1], valor: cpValues[1]),
-					(this.fases[2].nombre): new CoeficienteProduccion(fase: this.fases[2], valor: cpValues[2])]
+		Map cp = [(this.fases[0].nombre): cpValues[0],
+					(this.fases[1].nombre): cpValues[1],
+					(this.fases[2].nombre): cpValues[2]]
 		MateriaPrima mp = new MateriaPrima(nombre: nombre)
 		mp.coeficienteProduccion = cp
 		return mp

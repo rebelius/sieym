@@ -20,7 +20,6 @@ class MateriaPrimaController {
     }
 
     def save() {
-		println params
         def materiaPrimaInstance = new MateriaPrima(params)
         if (!materiaPrimaInstance.save(flush: true)) {
             render(view: "create", model: [materiaPrimaInstance: materiaPrimaInstance])
@@ -33,7 +32,6 @@ class MateriaPrimaController {
 
     def show() {
         def materiaPrimaInstance = MateriaPrima.get(params.id)
-		println materiaPrimaInstance.coeficienteProduccion
         if (!materiaPrimaInstance) {
 			flash.message = message(code: 'default.not.found.message', args: [message(code: 'materiaPrima.label', default: 'MateriaPrima'), params.id])
             redirect(action: "list")

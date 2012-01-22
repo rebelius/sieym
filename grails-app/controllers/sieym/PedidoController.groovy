@@ -4,122 +4,163 @@ import org.springframework.dao.DataIntegrityViolationException
 
 class PedidoController {
 
-    static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
+	static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
-    def index() {
-        redirect(action: "list", params: params)
-    }
+	PedidoService pedidoService
 
-    def list() {
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
+	def index() {
+		redirect(action: "list", params: params)
+	}
+
+	def planificar() {
+		Pedido pedido = Pedido.get(params.id)
+		if(pedido.items){
+			def alt = this.pedidoService.evaluarAlternativas(pedido)
+			[pedido: pedido, alt: alt]
+		} else {
+			flash.message = "No se puede planificar un Pedido sin Items"
+		}
+	}
+
+	def list() {
+		params.max = Math.min(params.max ? params.int('max') : 10, 100)
 		if(params.estado) {
 			EstadoPedido estado = EstadoPedido.valueOf(params.estado)
 			[pedidoInstanceList: Pedido.findAllByEstado(estado, params), pedidoInstanceTotal: Pedido.count()]
 		} else {
 			[pedidoInstanceList: Pedido.list(params), pedidoInstanceTotal: Pedido.count()]
 		}
-    }
+	}
 
-    def create() {
-        [pedidoInstance: new Pedido(params)]
-    }
+	def create() {
+		[pedidoInstance: new Pedido(params)]
+	}
 
-    def save() {
-        def pedidoInstance = new Pedido(params)
+	def save() {
+		def pedidoInstance = new Pedido(params)
 		pedidoInstance.estado = EstadoPedido.Solicitado
 		pedidoInstance.fechaPedido = new Date()
-        if (!pedidoInstance.save(flush: true)) {
-            render(view: "create", model: [pedidoInstance: pedidoInstance])
-            return
-        }
+		if (!pedidoInstance.save(flush: true)) {
+			render(view: "create", model: [pedidoInstance: pedidoInstance])
+			return
+		}
 
-		flash.message = message(code: 'default.created.message', args: [message(code: 'pedido.label', default: 'Pedido'), pedidoInstance.id])
-        redirect(action: "show", id: pedidoInstance.id)
-    }
+		flash.message = message(code: 'default.created.message', args: [
+			message(code: 'pedido.label', default: 'Pedido'),
+			pedidoInstance.id
+		])
+		redirect(action: "show", id: pedidoInstance.id)
+	}
 
-    def show() {
-        def pedidoInstance = Pedido.get(params.id)
-        if (!pedidoInstance) {
-			flash.message = message(code: 'default.not.found.message', args: [message(code: 'pedido.label', default: 'Pedido'), params.id])
-            redirect(action: "list")
-            return
-        }
+	def show() {
+		def pedidoInstance = Pedido.get(params.id)
+		if (!pedidoInstance) {
+			flash.message = message(code: 'default.not.found.message', args: [
+				message(code: 'pedido.label', default: 'Pedido'),
+				params.id
+			])
+			redirect(action: "list")
+			return
+		}
 
-        [pedidoInstance: pedidoInstance]
-    }
+		[pedidoInstance: pedidoInstance]
+	}
 
-    def edit() {
-        def pedidoInstance = Pedido.get(params.id)
-        if (!pedidoInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'pedido.label', default: 'Pedido'), params.id])
-            redirect(action: "list")
-            return
-        }
+	def edit() {
+		def pedidoInstance = Pedido.get(params.id)
+		if (!pedidoInstance) {
+			flash.message = message(code: 'default.not.found.message', args: [
+				message(code: 'pedido.label', default: 'Pedido'),
+				params.id
+			])
+			redirect(action: "list")
+			return
+		}
 
-        [pedidoInstance: pedidoInstance]
-    }
+		[pedidoInstance: pedidoInstance]
+	}
 
-    def cambiarEstado() {
-    	def pedidoInstance = Pedido.get(params.id)
-    			if (!pedidoInstance) {
-    				flash.message = message(code: 'default.not.found.message', args: [message(code: 'pedido.label', default: 'Pedido'), params.id])
-    						redirect(action: "list", 'params': [chooseEstado: 1])
-    						return
-    			}
-    	
-    	[pedidoInstance: pedidoInstance]
-    }
-    
-    def update() {
-        def pedidoInstance = Pedido.get(params.id)
-        if (!pedidoInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'pedido.label', default: 'Pedido'), params.id])
-            redirect(action: "list")
-            return
-        }
+	def cambiarEstado() {
+		def pedidoInstance = Pedido.get(params.id)
+		if (!pedidoInstance) {
+			flash.message = message(code: 'default.not.found.message', args: [
+				message(code: 'pedido.label', default: 'Pedido'),
+				params.id
+			])
+			redirect(action: "list", 'params': [chooseEstado: 1])
+			return
+		}
 
-        if (params.version) {
-            def version = params.version.toLong()
-            if (pedidoInstance.version > version) {
-                pedidoInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
-                          [message(code: 'pedido.label', default: 'Pedido')] as Object[],
-                          "Another user has updated this Pedido while you were editing")
-                render(view: "edit", model: [pedidoInstance: pedidoInstance])
-                return
-            }
-        }
+		[pedidoInstance: pedidoInstance]
+	}
+
+	def update() {
+		def pedidoInstance = Pedido.get(params.id)
+		if (!pedidoInstance) {
+			flash.message = message(code: 'default.not.found.message', args: [
+				message(code: 'pedido.label', default: 'Pedido'),
+				params.id
+			])
+			redirect(action: "list")
+			return
+		}
+
+		if (params.version) {
+			def version = params.version.toLong()
+			if (pedidoInstance.version > version) {
+				pedidoInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
+						[
+							message(code: 'pedido.label', default: 'Pedido')]
+						as Object[],
+						"Another user has updated this Pedido while you were editing")
+				render(view: "edit", model: [pedidoInstance: pedidoInstance])
+				return
+			}
+		}
 
 		def prevSeña = pedidoInstance.seña
-        pedidoInstance.properties = params
+		pedidoInstance.properties = params
 		if(prevSeña == null && pedidoInstance.seña != null) {
 			pedidoInstance.estado = EstadoPedido.Señado
 		}
 
-        if (!pedidoInstance.save(flush: true)) {
-            render(view: "edit", model: [pedidoInstance: pedidoInstance])
-            return
-        }
+		if (!pedidoInstance.save(flush: true)) {
+			render(view: "edit", model: [pedidoInstance: pedidoInstance])
+			return
+		}
 
-		flash.message = message(code: 'default.updated.message', args: [message(code: 'pedido.label', default: 'Pedido'), pedidoInstance.id])
-        redirect(action: "show", id: pedidoInstance.id)
-    }
+		flash.message = message(code: 'default.updated.message', args: [
+			message(code: 'pedido.label', default: 'Pedido'),
+			pedidoInstance.id
+		])
+		redirect(action: "show", id: pedidoInstance.id)
+	}
 
-    def delete() {
-        def pedidoInstance = Pedido.get(params.id)
-        if (!pedidoInstance) {
-			flash.message = message(code: 'default.not.found.message', args: [message(code: 'pedido.label', default: 'Pedido'), params.id])
-            redirect(action: "list")
-            return
-        }
+	def delete() {
+		def pedidoInstance = Pedido.get(params.id)
+		if (!pedidoInstance) {
+			flash.message = message(code: 'default.not.found.message', args: [
+				message(code: 'pedido.label', default: 'Pedido'),
+				params.id
+			])
+			redirect(action: "list")
+			return
+		}
 
-        try {
-            pedidoInstance.delete(flush: true)
-			flash.message = message(code: 'default.deleted.message', args: [message(code: 'pedido.label', default: 'Pedido'), params.id])
-            redirect(action: "list")
-        }
-        catch (DataIntegrityViolationException e) {
-			flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'pedido.label', default: 'Pedido'), params.id])
-            redirect(action: "show", id: params.id)
-        }
-    }
+		try {
+			pedidoInstance.delete(flush: true)
+			flash.message = message(code: 'default.deleted.message', args: [
+				message(code: 'pedido.label', default: 'Pedido'),
+				params.id
+			])
+			redirect(action: "list")
+		}
+		catch (DataIntegrityViolationException e) {
+			flash.message = message(code: 'default.not.deleted.message', args: [
+				message(code: 'pedido.label', default: 'Pedido'),
+				params.id
+			])
+			redirect(action: "show", id: params.id)
+		}
+	}
 }
