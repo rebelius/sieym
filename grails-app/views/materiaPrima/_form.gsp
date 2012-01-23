@@ -29,12 +29,11 @@
 <g:each in="${sieym.Fase.list()}" var="fase" status="i">
 	<div
 		class="fieldcontain ${hasErrors(bean: materiaPrimaInstance, field: 'coeficienteProduccion', 'error')} ">
-<%--		<g:hiddenField name="coeficienteProduccion[${fase.nombre}].fase.id" value="${fase.id}" />--%>
 		<label for="coeficienteProduccion[${fase.nombre}]">
 			${fase.nombre}:
 		</label>
 		<g:field type="number" step="0.01" name="coeficienteProduccion[${fase.nombre}]" required=""
-			value="${materiaPrimaInstance.coeficienteProduccion[fase.nombre]}" />
+			value="${materiaPrimaInstance.coeficienteProduccion?.getAt(fase.nombre)}" />
 	</div>
 </g:each>
 
