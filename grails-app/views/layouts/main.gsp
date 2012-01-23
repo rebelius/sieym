@@ -33,7 +33,7 @@
 				<li><a href="${createLink(uri: '/pedido')}"><g:message code="navigation.orders"/></a></li>
 				<li><a href="#"><g:message code="navigation.delivery"/></a></li>
 				<li><a href="#"><g:message code="navigation.contact"/></a></li>
-				<li><a href="#"><g:message code="navigation.stats"/></a></li>
+				<li><a href="${createLink(uri: '/estadistica')}"><g:message code="navigation.stats"/></a></li>
 				<li><a href="${createLink(controller: 'auth', action: 'dologout')}"><g:message code="navigation.logout"/></a></li>
 			</ul>
 		</div>

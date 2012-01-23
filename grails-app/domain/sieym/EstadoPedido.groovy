@@ -4,11 +4,11 @@ public enum EstadoPedido {
 	Solicitado,
 	Aceptado,
 	Señado,
+	Entregado,
 	Planificado,
 	Produccion,
 	Embolsado,
 	EnViaje,
-	Entregado,
 	Rechazado,
 	Cancelado
 	

@@ -1,6 +1,6 @@
 package sieym
 
-class Paquete {
+class Paquete  implements Comparable {
 	String name
 	String descripcion
 	float capacidad
@@ -9,4 +9,9 @@ class Paquete {
 	public String toString() {
 		"Tipo ${this.name} (${this.capacidad} Tn)"
 	}
+	@Override
+	int compareTo(obj) {
+		id.compareTo(obj.id)
+	}
 }
+

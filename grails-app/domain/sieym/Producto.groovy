@@ -1,6 +1,6 @@
 package sieym
 
-class Producto {
+class Producto implements Comparable{
 	
 	static hasMany = [composicion: ComponenteProducto]
 
@@ -12,5 +12,9 @@ class Producto {
 	
 	public float calcularCoeficienteProduccion(Fase fase) {
 		composicion.sum({it.materiaPrima.coeficiente(fase) * (it.porcentaje / 100)})
+	}
+	@Override
+	int compareTo(obj) {
+		id.compareTo(obj.id)
 	}
 }
