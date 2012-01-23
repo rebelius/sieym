@@ -12,7 +12,7 @@ class AuthController {
 		User user = User.findByUsername(params.username)
 		if(user && user.password == params.password) {
 			session.user = user
-			redirect(uri: user.role == Role.ADMIN ? '/user/list' : '/')
+			redirect(uri: user.role == Role.ADMIN ? '/user/list' : '/pedido')
 		} else {
 		 flash.message = "Usuario o contraseña incorrecta"
 		 redirect(action: 'login')

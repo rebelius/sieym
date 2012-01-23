@@ -21,29 +21,11 @@
 			</g:if>
 			<ol class="property-list user">
 			
-				<g:if test="${userInstance?.active}">
+				<g:if test="${userInstance?.name}">
 				<li class="fieldcontain">
-					<span id="active-label" class="property-label"><g:message code="user.active.label" default="Active" /></span>
+					<span id="name-label" class="property-label"><g:message code="user.name.label" default="Nombre" /></span>
 					
-						<span class="property-value" aria-labelledby="active-label"><g:formatBoolean boolean="${userInstance?.active}" /></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${userInstance?.address}">
-				<li class="fieldcontain">
-					<span id="address-label" class="property-label"><g:message code="user.address.label" default="Address" /></span>
-					
-						<span class="property-value" aria-labelledby="address-label"><g:fieldValue bean="${userInstance}" field="address"/></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${userInstance?.dni}">
-				<li class="fieldcontain">
-					<span id="dni-label" class="property-label"><g:message code="user.dni.label" default="Dni" /></span>
-					
-						<span class="property-value" aria-labelledby="dni-label"><g:fieldValue bean="${userInstance}" field="dni"/></span>
+						<span class="property-value" aria-labelledby="name-label"><g:fieldValue bean="${userInstance}" field="name"/></span>
 					
 				</li>
 				</g:if>
@@ -57,11 +39,20 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${userInstance?.name}">
+				<g:if test="${userInstance?.role}">
 				<li class="fieldcontain">
-					<span id="name-label" class="property-label"><g:message code="user.name.label" default="Name" /></span>
+					<span id="role-label" class="property-label"><g:message code="user.role.label" default="Rol" /></span>
 					
-						<span class="property-value" aria-labelledby="name-label"><g:fieldValue bean="${userInstance}" field="name"/></span>
+						<span class="property-value" aria-labelledby="role-label"><g:fieldValue bean="${userInstance}" field="role"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${userInstance?.username}">
+				<li class="fieldcontain">
+					<span id="address-label" class="property-label"><g:message code="user.address.label" default="Username" /></span>
+					
+						<span class="property-value" aria-labelledby="address-label"><g:fieldValue bean="${userInstance}" field="address"/></span>
 					
 				</li>
 				</g:if>
@@ -75,20 +66,29 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${userInstance?.phone}">
+				<g:if test="${userInstance?.dni}">
 				<li class="fieldcontain">
-					<span id="phone-label" class="property-label"><g:message code="user.phone.label" default="Phone" /></span>
+					<span id="dni-label" class="property-label"><g:message code="user.dni.label" default="DNI" /></span>
 					
-						<span class="property-value" aria-labelledby="phone-label"><g:fieldValue bean="${userInstance}" field="phone"/></span>
+						<span class="property-value" aria-labelledby="dni-label"><g:fieldValue bean="${userInstance}" field="dni"/></span>
 					
 				</li>
 				</g:if>
 			
-				<g:if test="${userInstance?.role}">
+				<g:if test="${userInstance?.address}">
 				<li class="fieldcontain">
-					<span id="role-label" class="property-label"><g:message code="user.role.label" default="Role" /></span>
+					<span id="address-label" class="property-label"><g:message code="user.address.label" default="Direccion" /></span>
 					
-						<span class="property-value" aria-labelledby="role-label"><g:fieldValue bean="${userInstance}" field="role"/></span>
+						<span class="property-value" aria-labelledby="address-label"><g:fieldValue bean="${userInstance}" field="address"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${userInstance?.phone}">
+				<li class="fieldcontain">
+					<span id="phone-label" class="property-label"><g:message code="user.phone.label" default="Telefono" /></span>
+					
+						<span class="property-value" aria-labelledby="phone-label"><g:fieldValue bean="${userInstance}" field="phone"/></span>
 					
 				</li>
 				</g:if>

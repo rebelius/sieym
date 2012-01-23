@@ -20,7 +20,12 @@
 		<g:layoutHead/>
 	</head>
 	<body>
-		<div id="header" role="banner"><h1>Sistema Integral para la Elaboración de la Yerba Mate</h1></div>
+		<div id="header" role="banner">
+			<h1 style="width: 80%;">Sistema Integral para la Elaboración de la Yerba Mate</h1>
+			<g:if test="${session.user}">
+				${session.user.name} (${session.user.role})
+			</g:if>
+		</div>
 		<div class="nav" role="navigation">
 			<ul class="main">
 				<li><a href="${createLink(uri: '/user')}"><g:message code="navigation.users"/></a></li>

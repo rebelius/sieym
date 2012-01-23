@@ -12,6 +12,5 @@ class User {
 	String phone
 	String address
 	String password
-	Boolean active
 	Role role
 }
