@@ -1,3 +1,4 @@
+<%@page import="sieym.Role"%>
 <%@ page import="sieym.Pedido" %>
 <%@ page import="sieym.Paquete" %>
 <%@ page import="sieym.User" %>
@@ -9,7 +10,7 @@
 		<g:message code="pedido.cliente.label" default="Cliente" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:select name="cliente.id" from="${User.list()}" required="" value="${pedidoInstance?.cliente?.id}" optionKey="id" optionValue="name"/>
+	<g:select name="cliente.id" from="${User.findAllByRole(sieym.Role.USER)}" required="" value="${pedidoInstance?.cliente?.id}" optionKey="id" optionValue="name"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: pedidoInstance, field: 'direccionEntrega', 'error')} ">
