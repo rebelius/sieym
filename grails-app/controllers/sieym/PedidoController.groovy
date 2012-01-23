@@ -38,6 +38,9 @@ class PedidoController {
 
 	def save() {
 		def pedidoInstance = new Pedido(params)
+		if(session.user.role==sieym.Role.USER){
+			pedidoInstance.cliente=session.user
+		}
 		pedidoInstance.estado = EstadoPedido.Solicitado
 		pedidoInstance.fechaPedido = new Date()
 		if (!pedidoInstance.save(flush: true)) {

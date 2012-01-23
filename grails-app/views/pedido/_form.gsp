@@ -10,7 +10,12 @@
 		<g:message code="pedido.cliente.label" default="Cliente" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:select name="cliente.id" from="${User.findAllByRole(sieym.Role.USER)}" required="" value="${pedidoInstance?.cliente?.id}" optionKey="id" optionValue="name"/>
+	<g:if test="${session.user.role!=sieym.Role.USER}"> 
+		<g:select name="cliente.id" from="${User.findAllByRole(sieym.Role.USER)}" required="" value="${pedidoInstance?.cliente?.id}" optionKey="id" optionValue="name"/>
+	</g:if>
+	<g:else>
+		${session.user.name}
+	</g:else>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: pedidoInstance, field: 'direccionEntrega', 'error')} ">

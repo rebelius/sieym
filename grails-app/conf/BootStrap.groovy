@@ -24,7 +24,7 @@ class BootStrap {
 	def fases
 
 	def init = { servletContext ->
-		User user = new User(
+		def user = User.findByUsername('admin') ?: new User(
 				name: "Admin User",
 				dni: 66666666,
 				username: "admin",
@@ -34,10 +34,10 @@ class BootStrap {
 				password: "shhhh",
 				active: true,
 				role: Role.ADMIN
-				)
+				);
 		user.save()
 		println user.errors
-		user = new User(
+		def user1 = User.findByUsername('admin') ?: new User(
 				name: "Regular User",
 				dni: 555555555,
 				username: "user",
@@ -48,7 +48,7 @@ class BootStrap {
 				active: true,
 				role: Role.USER
 				)
-		user.save()
+		user1.save()
 		new Logistica(precioPorKm: 250, tiempoPorKm: 1.5).save()
 		
 		Fase sapecado = new Fase(nombre: "Sapecado", duracion: Duration.standardHours(9))
