@@ -107,7 +107,7 @@ class BootStrap {
 		MateriaPrima sal = MateriaPrima.findByNombre('Sal') ?: new MateriaPrima(nombre: 'Sal', descripcion: 'Para salar').save()
 		MateriaPrima pimienta = MateriaPrima.findByNombre('Pimienta') ?: new MateriaPrima(nombre: 'Pimienta', descripcion: 'Para pimentar').save()
 		
-//		if( Producto.findByNombre('Sal y Pimienta')==null){
+		if( Producto.findByNombre('Sal y Pimienta')==null){
 			Producto p = new Producto(nombre: 'Sal y Pimienta')
 			p.addToComposicion(new ComponenteProducto(materiaPrima: sal, porcentaje: 60))
 			p.addToComposicion(new ComponenteProducto(materiaPrima: pimienta, porcentaje: 40))
@@ -125,7 +125,7 @@ class BootStrap {
 					ped.save()
 				}
 			}
-//		}
+		}
 		
 	}
 	

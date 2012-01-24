@@ -13,7 +13,7 @@ class EstadisticaController {
 
 	def list() {
 			
-		EstadoPedido estado = EstadoPedido.Aceptado
+		EstadoPedido estado = EstadoPedido.Entregado
 		def pedidos=Pedido.findAllByEstado(estado)
 		Map<Paquete,Integer> prod= new TreeMap<Paquete, Integer>()
 		pedidos.each{
@@ -51,14 +51,10 @@ class EstadisticaController {
 	}
 
 	
-	def listPeriodo() {
+	def listPedido() {
 		params.max = Math.min(params.max ? params.int('max') : 10, 100)
-		if(params.estado) {
-			EstadoPedido estado = EstadoPedido.valueOf(params.estado)
-			[pedidoInstanceList: Pedido.findAllByEstado(estado, params), pedidoInstanceTotal: Pedido.count()]
-		} else {
-			[pedidoInstanceList: Pedido.list(params), pedidoInstanceTotal: Pedido.count()]
-		}
+		[pedidoInstanceList: Pedido.findAllByEstado(EstadoPedido.Entregado, params), pedidoInstanceTotal: Pedido.countByEstado(EstadoPedido.Entregado)]
+		
 	}
 
 	
@@ -90,13 +86,24 @@ class EstadisticaController {
 
 	
 	def estadisticasInterna() {
-		params.max = Math.min(params.max ? params.int('max') : 10, 100)
-		if(params.estado) {
-			EstadoPedido estado = EstadoPedido.valueOf(params.estado)
-			[pedidoInstanceList: Pedido.findAllByEstado(estado, params), pedidoInstanceTotal: Pedido.count()]
-		} else {
-			[pedidoInstanceList: Pedido.list(params), pedidoInstanceTotal: Pedido.count()]
+		def l = new ArrayList<EstadisticaInternaCommand>()
+		def c = Pedido.createCriteria()
+		def results = c.list {
+		   projections {
+			  groupProperty("estado")
+			  rowCount()
+		   }
 		}
+		
+		 results.each {
+			 l.add(new EstadisticaInternaCommand( estado: it[0],cantidad: it[1]))
+		 }
+		 
+		[pedidoInstanceList:l]
+			
+		
+			
+		
 	}
 
 	
@@ -112,7 +119,10 @@ public class PaqueteCommand{
 	Paquete paquete
 	Integer cantidad
 }
-
+public class EstadisticaInternaCommand{
+	String estado
+	Long cantidad
+}
 public class ClienteCommand{
 	User cliente
 	Integer cantidad
