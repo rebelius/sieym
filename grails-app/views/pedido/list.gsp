@@ -49,10 +49,13 @@
 
 					<th><g:message code="pedido.id.label" default="ID Pedido" /></th>
 
-					<th><g:message code="pedido.cliente.id.label"
-							default="ID Cliente" /></th>
-
 					<th><g:message code="pedido.cliente.nombre.label" default="Nombre" /></th>
+					<th><g:message code="pedido.cliente.id.label"
+							default="Dni" /></th>
+					<g:if test="${estado == EstadoPedido.Solicitado }">
+						<th><g:message code="pedido.cliente.id.label"
+							default="Items" /></th>
+					</g:if>
 
 					<g:sortableColumn property="estado"
 						title="${message(code: 'pedido.estado.label', default: 'Estado')}" />
@@ -71,17 +74,40 @@
 				<g:each in="${pedidoInstanceList}" status="i" var="pedidoInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 
-						<td><g:link action="show" id="${pedidoInstance.id}">
-								${fieldValue(bean: pedidoInstance, field: "id")}
-							</g:link></td>
-
 						<td>
-							${fieldValue(bean: pedidoInstance, field: "cliente.id")}
+						<g:if test="${pedidoInstance?.estado== EstadoPedido.Solicitado }">
+						<g:form >
+							<g:hiddenField name="id" value="${pedidoInstance?.id}" />
+							<g:hiddenField name="estado" value="${estado}" />
+							
+	
+							<g:actionSubmit action="pasarAceptado"
+								value="${fieldValue(bean: pedidoInstance, field: "id")}"
+								onclick="return confirm('${message(code: 'default.button.aceptar.confirm.message', default: 'Esta seguro que decea pasar a aceptar este elemento?')}');" />
+						</g:form>
+						</g:if>
+						<g:else>
+							<g:link action="show" id="${pedidoInstance.id}">
+								${fieldValue(bean: pedidoInstance, field: "id")}
+							</g:link>
+						</g:else>
+							
 						</td>
 
 						<td>
 							${fieldValue(bean: pedidoInstance, field: "cliente.name")}
 						</td>
+						<td>
+							${fieldValue(bean: pedidoInstance, field: "cliente.dni")}
+						</td>
+						<g:if test="${pedidoInstance?.estado== EstadoPedido.Solicitado }">
+						<td>
+							<g:each in="${	pedidoInstance?.items}" status="i1" var="ps">
+							<p>${ps?.producto?.nombre } -${ps?.cantidad }</p>
+							</g:each>
+						
+						</td>
+						</g:if>
 
 						<td>
 							${pedidoInstance.estado.name()}&nbsp;
@@ -106,7 +132,7 @@
 			</tbody>
 		</table>
 		<div class="pagination">
-			<g:paginate total="${pedidoInstanceTotal}" />
+			<g:paginate total="${pedidoInstanceTotal}" params="${params }"/>
 		</div>
 	</div>
 </body>

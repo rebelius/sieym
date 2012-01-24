@@ -4,7 +4,6 @@ import org.springframework.dao.DataIntegrityViolationException
 
 class PedidoController {
 
-	static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
 	PedidoService pedidoService
 
@@ -26,7 +25,7 @@ class PedidoController {
 		params.max = Math.min(params.max ? params.int('max') : 10, 100)
 		if(params.estado) {
 			EstadoPedido estado = EstadoPedido.valueOf(params.estado)
-			[pedidoInstanceList: Pedido.findAllByEstado(estado, params), pedidoInstanceTotal: Pedido.count()]
+			[pedidoInstanceList: Pedido.findAllByEstado(estado, params), pedidoInstanceTotal: Pedido.countByEstado(estado),estado:estado]
 		} else {
 			[pedidoInstanceList: Pedido.list(params), pedidoInstanceTotal: Pedido.count()]
 		}
@@ -41,7 +40,7 @@ class PedidoController {
 		if(session.user.role==sieym.Role.USER){
 			pedidoInstance.cliente=session.user
 		}
-		pedidoInstance.estado = EstadoPedido.Solicitado
+		pedidoInstance.estado = EstadoPedido.Proceso
 		pedidoInstance.fechaPedido = new Date()
 		if (!pedidoInstance.save(flush: true)) {
 			render(view: "create", model: [pedidoInstance: pedidoInstance])
@@ -82,7 +81,33 @@ class PedidoController {
 
 		[pedidoInstance: pedidoInstance]
 	}
-
+	def pasarAceptado(){
+		def pedidoInstance = Pedido.get(params.id)
+		if (!pedidoInstance) {
+			flash.error = message(code: 'default.not.found.message', args: [
+				message(code: 'pedido.label', default: 'Pedido'),
+				params.id
+			])
+			redirect(action: "list", 'params': [chooseEstado: 1])
+			return
+		}else{
+			pedidoInstance.estado=EstadoPedido.Aceptado
+			if(!pedidoInstance.save(flush:true)){
+				flash.error = message(code: 'default.not.save.message', args: [
+					message(code: 'pedido.label', default: 'No se pudo guardar el cambio intentelo nuevamente'),
+					params.id
+				])
+			}else{
+				flash.message = message(code: 'default.save.Aceptado', args: [
+					params.id
+				])
+			}
+			redirect(action: "list", 'params': [estado:params?.estado])
+			
+		}
+		
+		
+	}
 	def cambiarEstado() {
 		def pedidoInstance = Pedido.get(params.id)
 		if (!pedidoInstance) {
@@ -120,7 +145,14 @@ class PedidoController {
 				return
 			}
 		}
-
+		if(pedidoInstance.items.size()<1){
+			flash.error = message(code: 'default.updated.error', args: [
+				pedidoInstance.id
+			])
+			redirect(action: "show", id: pedidoInstance.id)
+			return 
+		}
+			
 		def prevSeña = pedidoInstance.seña
 		pedidoInstance.properties = params
 		if(prevSeña == null && pedidoInstance.seña != null) {

@@ -27,6 +27,11 @@
 				${flash.message}
 			</div>
 		</g:if>
+		<g:if test="${flash.error}">
+			<div class="error" role="status">
+				${flash.error}
+			</div>
+		</g:if>
 		<ol class="property-list pedido">
 
 			<g:if test="${pedidoInstance?.cliente}">

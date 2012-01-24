@@ -10,8 +10,8 @@ public enum EstadoPedido {
 	Embolsado,
 	EnViaje,
 	Rechazado,
-	Cancelado
-	
+	Cancelado,
+	Proceso
 	public static List valuesFor(EstadoPedido ep) {
 		def values = [ep]
 		values.add Cancelado
