@@ -7,7 +7,15 @@
 		<title><g:message code="default.create.label" args="[entityName]" /></title>
 	</head>
 	<body>
+	
 		<div id="create-fase" class="content scaffold-create" role="main">
+			<div class="nav" role="navigation">
+			<ul>
+				<li><g:link class="list" action="list">
+						<g:message code="default.list.label" args="[entityName]" />
+					</g:link></li>
+			</ul>
+		</div>
 			<h1><g:message code="default.create.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">
 			<div class="message" role="status">${flash.message}</div>
