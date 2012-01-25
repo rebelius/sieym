@@ -31,6 +31,6 @@
 		<g:message code="paquete.tiempoArmado.label" default="Tiempo de Armado" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:field type="number" name="tiempoArmado" required="" value="${fieldValue(bean: paqueteInstance, field: 'tiempoArmado')}"/>
+	<g:field type="number" name="tiempoArmado" required="" value="${fieldValue(bean: paqueteInstance, field: 'tiempoArmado.standardMinutes')}"/>
 </div>
 

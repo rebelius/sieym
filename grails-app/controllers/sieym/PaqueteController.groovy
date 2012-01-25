@@ -1,5 +1,6 @@
 package sieym
 
+import org.joda.time.Duration;
 import org.springframework.dao.DataIntegrityViolationException
 
 class PaqueteController {
@@ -20,6 +21,7 @@ class PaqueteController {
     }
 
     def save() {
+		params.tiempoArmado = Duration.standardMinutes(params.tiempoArmado as Integer)
         def paqueteInstance = new Paquete(params)
         if (!paqueteInstance.save(flush: true)) {
             render(view: "create", model: [paqueteInstance: paqueteInstance])
@@ -71,6 +73,7 @@ class PaqueteController {
             }
         }
 
+		params.tiempoArmado = Duration.standardMinutes(params.tiempoArmado as Integer)
         paqueteInstance.properties = params
 
         if (!paqueteInstance.save(flush: true)) {

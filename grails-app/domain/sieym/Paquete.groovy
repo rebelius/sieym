@@ -1,10 +1,12 @@
 package sieym
 
+import org.joda.time.Duration;
+
 class Paquete  implements Comparable {
 	String name
 	String descripcion
-	float capacidad
-	int tiempoArmado
+	int capacidad
+	Duration tiempoArmado
 	Integer cantidad
 
 	

@@ -31,6 +31,10 @@ grails.project.dependency.resolution = {
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
 
+		compile("joda-time:joda-time-hibernate:1.3") {
+			excludes "joda-time", "hibernate"
+		}
+//		runtime 'org.jadira.usertype:usertype.jodatime:1.9'
         runtime 'mysql:mysql-connector-java:5.1.16'
     }
 
@@ -38,6 +42,10 @@ grails.project.dependency.resolution = {
         compile ":hibernate:$grailsVersion"
         compile ":jquery:1.6.1.1"
         compile ":resources:1.0.2"
+		
+		compile(":joda-time:1.3.1") {
+			excludes "joda-time-hibernate"
+		}
 
         build ":tomcat:$grailsVersion"
     }

@@ -46,7 +46,7 @@
 				<li class="fieldcontain">
 					<span id="tiempoArmado-label" class="property-label"><g:message code="paquete.tiempoArmado.label" default="Tiempo de Armado" /></span>
 					
-						<span class="property-value" aria-labelledby="tiempoArmado-label"><g:fieldValue bean="${paqueteInstance}" field="tiempoArmado"/></span>
+						<span class="property-value" aria-labelledby="tiempoArmado-label"><g:fieldValue bean="${paqueteInstance}" field="tiempoArmado.standardMinutes"/></span>
 					
 				</li>
 				</g:if>

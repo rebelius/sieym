@@ -57,6 +57,14 @@ class Pedido {
 		this.items.sum({ (it.paquete.capacidad * it.cantidad) - (sobrantes[it.producto] ?: 0) })
 	}
 	
+	public Duration cacularTiempoEmpaquetado() {
+		long totalMinutes = 0
+		this.items.each {
+			totalMinutes += it.paquete.tiempoArmado.getStandardMinutes() * it.cantidad
+		}
+		Duration.standardMinutes(totalMinutes)
+	}
+	
 	public def generarAlternativasProduccion(List maquinas, Map sobrantes) {
 		float peso = this.calcularPesoTotal(sobrantes);
 		def simples = maquinas.findAll({it.capacidad >= peso})

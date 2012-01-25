@@ -14,8 +14,8 @@ class PedidoController {
 	def planificar() {
 		Pedido pedido = Pedido.get(params.id)
 		if(pedido.items){
-			def alt = this.pedidoService.evaluarAlternativas(pedido)
-			[pedido: pedido, alt: alt]
+			def alt = this.pedidoService.planificar(pedido)
+			[pedido: pedido] + alt
 		} else {
 			flash.message = "No se puede planificar un Pedido sin Items"
 		}

@@ -25,24 +25,48 @@
 				Tn
 			</h3>
 			<h2 style="margin-top: 10px;">Posibles Alternativas</h2>
-			<g:if test="${flash.message}">
-				<div class="message" role="status">
-					${flash.message}
-				</div>
-			</g:if>
-			<g:each in="${alt}" var="curAlt">
-				<h3 style="margin-top: 10px;">
-					${curAlt.key.nombre}
-					(CP:
-					${pedido.calcularCoeficienteProduccion(curAlt.key)})
-				</h3>
-				<ul style="margin-left: 30px;">
-					<g:each var="op" status="i" in="${curAlt.value}">
-						<li><strong>Maquinas:</strong> ${op.maquinas} <strong>Duracion:</strong>
-							${op.duracion.standardHours}hs</li>
+
+
+			<table>
+				<thead>
+					<tr>
+
+						<th>Maquina</th>
+
+						<g:each in="${fases}" var="fase">
+							<th>Fase - ${fase.nombre}</th>
+						</g:each>
+
+					</tr>
+				</thead>
+				<tbody>
+					<g:each in="${fases}" var="fase">
+						<g:each in="${resPorFases[fase]}" var="res" status="i">
+
+							<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
+
+								<td>
+									${res.maquina.descripcion }
+								</td>
+
+								<td>fase 1</td>
+								<td>fase 2</td>
+								<td>fase 3</td>
+
+							</tr>
+
+						</g:each>
 					</g:each>
-				</ul>
-			</g:each>
+				</tbody>
+			</table>
+
+			<p>
+				El tiempo de empaquetado del Pedido es de
+				${tiempoEmpaquetado.standardHours}hs y el mismo estara listo para el
+				dia
+				${fechaPedidoTerminado}
+			</p>
+
 		</g:else>
 	</div>
 </body>

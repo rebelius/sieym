@@ -2,6 +2,7 @@ import sieym.MateriaPrima;
 
 import java.util.List;
 
+import org.joda.time.DateTime
 import org.joda.time.Duration
 
 import sieym.ComponenteProducto;
@@ -15,6 +16,7 @@ import sieym.Pedido;
 import sieym.Producto;
 import sieym.Role;
 import sieym.Paquete;
+import sieym.Sobrante
 
 import sieym.User
 
@@ -131,7 +133,6 @@ class BootStrap {
 		def items = [new ItemPedido(producto: pA, paquete: paq2, cantidad: 10)]
 		Pedido ped = new Pedido(cliente: user, items: items, estado: EstadoPedido.Señado, fechaPedido: new Date(), direccionEntrega: "Formosa 1234")
 		ped.save()
-
 	}
 
 	def destroy = {

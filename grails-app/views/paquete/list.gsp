@@ -42,7 +42,7 @@
 					
 						<td>${fieldValue(bean: paqueteInstance, field: "capacidad")}</td>
 					
-						<td>${fieldValue(bean: paqueteInstance, field: "tiempoArmado")}</td>
+						<td>${fieldValue(bean: paqueteInstance, field: "tiempoArmado.standardMinutes")}</td>
 					
 					</tr>
 				</g:each>
