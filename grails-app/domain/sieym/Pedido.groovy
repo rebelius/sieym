@@ -9,10 +9,14 @@ class Pedido {
 		motivoRechazo nullable: true
 		motivoCancelado nullable: true
 		seña min: 150d, nullable: true
+		km nullable:false,min:1
+		camion nullable:true
+		createdDate  nullable:true
+		lastModifiedDate nullable:true
     }
 	
 	static hasMany = [items: ItemPedido]
-	
+	Camion camion
 	User cliente
 	EstadoPedido estado
 	Date fechaPedido
@@ -22,8 +26,16 @@ class Pedido {
 	String motivoRechazo
 	String motivoCancelado
 	boolean recibirAvisos
+	Integer km
 	List items
-
+	Date createdDate
+	Date lastModifiedDate
+	def beforeInsert = {
+		createdDate = new Date()
+	}
+	def beforeUpdate = {
+		lastModifiedDate = new Date()
+	}
 	public float calcularCoeficienteProduccion(Fase fase) {
 		items.sum({it.producto.calcularCoeficienteProduccion(fase)})
 	}

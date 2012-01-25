@@ -13,4 +13,7 @@ class Camion {
 	String chofer
 	boolean disponible
 	
+	def beforeInsert = {
+		disponible=true
+	}
 }

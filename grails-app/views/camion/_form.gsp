@@ -34,11 +34,4 @@
 	<g:textField name="chofer" value="${camionInstance?.chofer}"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: camionInstance, field: 'disponible', 'error')} ">
-	<label for="disponible">
-		<g:message code="camion.disponible.label" default="Disponible" />
-		
-	</label>
-	<g:checkBox name="disponible" value="${camionInstance?.disponible}" />
-</div>
 
