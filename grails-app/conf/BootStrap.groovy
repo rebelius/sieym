@@ -26,7 +26,7 @@ class BootStrap {
 	def fases
 
 	def init = { servletContext ->
-		def user = User.findByUsername('admin') ?: new User(
+		def admin = User.findByUsername('admin') ?: new User(
 				name: "Admin User",
 				dni: 66666666,
 				username: "admin",
@@ -37,9 +37,9 @@ class BootStrap {
 				active: true,
 				role: Role.ADMIN
 				);
-		user.save()
-		println user.errors
-		def user1 = User.findByUsername('user') ?: new User(
+		admin.save()
+		println admin.errors
+		def user = User.findByUsername('user') ?: new User(
 				name: "user",
 				dni: 555555555,
 				username: "user",
@@ -50,7 +50,8 @@ class BootStrap {
 				active: true,
 				role: Role.USER
 				)
-		user1.save()
+		user.save()
+		println user.errors
 		def operador = User.findByUsername('operador') ?: new User(
 				name: "operador",
 				dni: 555555555,
@@ -62,7 +63,9 @@ class BootStrap {
 				active: true,
 				role: Role.OPERATOR
 				)
-		user1.save()
+		operador.save()
+		println operador.errors
+		
 		new Logistica(precioPorKm: 250, tiempoPorKm: 1.5).save()
 
 		Fase sapecado = Fase.findByNombre('Sapecado') ?: new Fase(nombre: "Sapecado", duracion: Duration.standardHours(9))
@@ -109,10 +112,10 @@ class BootStrap {
 		MateriaPrima sal = MateriaPrima.findByNombre('Sal') ?: new MateriaPrima(nombre: 'Sal', descripcion: 'Para salar').save()
 		MateriaPrima pimienta = MateriaPrima.findByNombre('Pimienta') ?: new MateriaPrima(nombre: 'Pimienta', descripcion: 'Para pimentar').save()
 
-		Paquete paq =  Paquete.findByName('A') ?: new Paquete(name: "A", descripcion: "Paquete tipo A", capacidad: 23, tiempoArmado: 30)
+		Paquete paq =  Paquete.findByName('A') ?: new Paquete(name: "A", descripcion: "Paquete tipo A", capacidad: 23, tiempoArmado: Duration.standardMinutes(30))
 		paq.save()
 
-		Paquete paq2 =Paquete.findByName('B') ?:  new Paquete(name: "B", descripcion: "Paquete tipo B", capacidad: 10, tiempoArmado: 20)
+		Paquete paq2 =Paquete.findByName('B') ?:  new Paquete(name: "B", descripcion: "Paquete tipo B", capacidad: 10, tiempoArmado: Duration.standardMinutes(20))
 		paq2.save()
 
 		if( Producto.findByNombre('Sal y Pimienta')==null){
@@ -124,7 +127,7 @@ class BootStrap {
 			EstadoPedido.values()[0..4].each { def ep ->
 				2.times { def time ->
 					def items = [new ItemPedido(producto: p, paquete: paq, cantidad: 5 * (1 + time) * (1 + ep.ordinal()))]
-					Pedido ped = new Pedido(cliente: user, items: items, estado: ep, fechaPedido: new Date(), direccionEntrega: "Pichincha 1234")
+					Pedido ped = new Pedido(cliente: user, items: items, estado: ep, fechaPedido: new Date(), direccionEntrega: "Pichincha 1234", km: 100)
 					ped.save()
 				}
 			}
