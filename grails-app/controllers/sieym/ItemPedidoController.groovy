@@ -18,7 +18,7 @@ class ItemPedidoController {
     def save() {
         Pedido pedido = Pedido.get(params.pedidoId)
         def itemPedidoInstance = new ItemPedido(params)
-		pedido.items.add itemPedidoInstance
+		pedido.addToItems itemPedidoInstance
         if (!pedido.save(flush: true)) {
             render(view: "create", model: [itemPedidoInstance: itemPedidoInstance])
             return
@@ -90,7 +90,7 @@ class ItemPedidoController {
         }
 
         try {
-			pedido.items.remove(itemPedidoInstance)
+			pedido.removeFromItems(itemPedidoInstance)
 			pedido.save(flush: true)
             itemPedidoInstance.delete(flush: true)
 			flash.message = message(code: 'default.deleted.message', args: [message(code: 'itemPedido.label', default: 'ItemPedido'), params.id])
