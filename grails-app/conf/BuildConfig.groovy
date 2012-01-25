@@ -34,7 +34,7 @@ grails.project.dependency.resolution = {
 		compile("joda-time:joda-time-hibernate:1.3") {
 			excludes "joda-time", "hibernate"
 		}
-//		runtime 'org.jadira.usertype:usertype.jodatime:1.9'
+		compile 'org.jadira.usertype:usertype.jodatime:1.9'
         runtime 'mysql:mysql-connector-java:5.1.16'
     }
 

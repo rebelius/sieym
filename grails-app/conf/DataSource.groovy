@@ -1,21 +1,24 @@
 dataSource {
     pooled = true
-    driverClassName = "com.mysql.jdbc.Driver"
-    username = "root"
-    password = "toor"
-	properties {
-		maxActive = 50
-		maxIdle = 25
-		minIdle = 5
-		initialSize = 5
-		numTestsPerEvictionRun = 3
-		testOnBorrow = true
-		testWhileIdle = true
-		testOnReturn = true
-		validationQuery="SELECT 1 from dual"
-		minEvictableIdleTimeMillis = 1800000
-		timeBetweenEvictionRunsMillis = 1800000
-	}
+	driverClassName = "org.h2.Driver"
+	username = "sa"
+	password = ""
+//    driverClassName = "com.mysql.jdbc.Driver"
+//    username = "root"
+//    password = "toor"
+//	properties {
+//		maxActive = 50
+//		maxIdle = 25
+//		minIdle = 5
+//		initialSize = 5
+//		numTestsPerEvictionRun = 3
+//		testOnBorrow = true
+//		testWhileIdle = true
+//		testOnReturn = true
+//		validationQuery="SELECT 1 from dual"
+//		minEvictableIdleTimeMillis = 1800000
+//		timeBetweenEvictionRunsMillis = 1800000
+//	}
 }
 hibernate {
     cache.use_second_level_cache = true
@@ -27,14 +30,18 @@ hibernate {
 environments {
     development {
         dataSource {
-            dbCreate = "update" // one of 'create', 'create-drop','update'
-             url = "jdbc:mysql://localhost/sieym?autoReconnect=true"
+            dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
+            url = "jdbc:h2:mem:devDb"
+//            dbCreate = "update" // one of 'create', 'create-drop','update'
+//             url = "jdbc:mysql://localhost/sieym?autoReconnect=true"
         }
     }
     test {
         dataSource {
-            dbCreate = "update" // one of 'create', 'create-drop','update'
-             url = "jdbc:mysql://localhost/sieym?autoReconnect=true"
+            dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
+            url = "jdbc:h2:mem:devDb"
+//            dbCreate = "update" // one of 'create', 'create-drop','update'
+//             url = "jdbc:mysql://localhost/sieym?autoReconnect=true"
         }
     }
     production {

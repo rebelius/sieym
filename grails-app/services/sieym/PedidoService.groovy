@@ -23,7 +23,7 @@ class PedidoService {
 			def intervaloLibre = maquinas.first().verificarDisponibilidad(comienzoDeFase).first()
 			maquinas.each {
 				def res = new ReservaMaquina(pedido: pedido, intervalo: new Interval(comienzoDeFase,  fase.duracion))
-				it.addToReservas(res)//.save(flush: true)
+				it.addToReservas(res).save(flush: true)
 				reservas += res
 			}
 			resPorFase.put(fase, reservas)
