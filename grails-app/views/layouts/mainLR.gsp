@@ -18,8 +18,15 @@
 		<r:require module="jquery-ui"/>
         <r:layoutResources/>
 		<g:layoutHead/>
+		<script type="text/JavaScript">
+			<!--
+			function timedRefresh(timeoutPeriod) {
+				setTimeout("location.reload(true);",timeoutPeriod);
+			}
+			//   -->
+		</script>
 	</head>
-	<body>
+	<body  onload="JavaScript:timedRefresh(5000);">
 		<div id="header" role="banner">
 			<h1 style="width: 80%;">Sistema Integral para la Elaboración de la Yerba Mate</h1>
 			<g:if test="${session.user}">

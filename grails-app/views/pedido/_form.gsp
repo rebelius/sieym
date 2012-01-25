@@ -26,6 +26,15 @@
 	<g:textField name="direccionEntrega" required="" value="${pedidoInstance?.direccionEntrega}"/>
 </div>
 
+	
+<div class="fieldcontain ${hasErrors(bean: pedidoInstance, field: 'direccionEntrega', 'error')} ">
+	<label for="direccionEntrega">
+		<g:message code="pedido.direccionEntrega.label" default="Distancia Km" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:textField name="km" required="" value="${pedidoInstance?.km}"/>
+</div>
+	
 <div class="fieldcontain ${hasErrors(bean: pedidoInstance, field: 'recibirAvisos', 'error')} ">
 	<label for="recibirAvisos">
 		<g:message code="pedido.recibirAvisos.label" default="Recibir Avisos" />
