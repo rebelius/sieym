@@ -33,18 +33,14 @@
 				${session.user.name} (${session.user.role})
 			</g:if>
 		</div>
-		<div class="nav" role="navigation">
-			<ul class="main">
-				<li><a href="${createLink(uri: '/user')}"><g:message code="navigation.users"/></a></li>
-				<li><a href="${createLink(uri: '/logistica')}"><g:message code="navigation.config"/></a></li>
-				<li><a href="${createLink(uri: '/pedido')}"><g:message code="navigation.orders"/></a></li>
-				<li><a href="${createLink(uri: '/logistic')}"><g:message code="navigation.delivery"/></a></li>
-				<li><a href="${createLink(uri: '/logistica')}"><g:message code="navigation.contact"/></a></li>
-				<li><a href="${createLink(uri: '/stock')}"><g:message code="navigation.stock"/></a></li>
-				<li><a href="${createLink(uri: '/estadistica')}"><g:message code="navigation.stats"/></a></li>
-				<li><a href="${createLink(controller: 'auth', action: 'dologout')}"><g:message code="navigation.logout"/></a></li>
-			</ul>
-		</div>
+		<g:render template="/layouts/menu" ></g:render>
+		
+			<g:if test="${flash.message}">
+			<div class="message" role="status">${flash.message}</div>
+			</g:if>
+			<g:if test="${flash.error}">
+			<div class="error" role="status">${flash.error}</div>
+			</g:if>
 		<g:layoutBody/>
 		<div class="footer" role="contentinfo"></div>
 		<div id="spinner" class="spinner" style="display:none;"><g:message code="spinner.alt" default="Loading&hellip;"/></div>

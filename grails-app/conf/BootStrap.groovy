@@ -112,18 +112,22 @@ class BootStrap {
 		MateriaPrima sal = MateriaPrima.findByNombre('Sal') ?: new MateriaPrima(nombre: 'Sal', descripcion: 'Para salar').save()
 		MateriaPrima pimienta = MateriaPrima.findByNombre('Pimienta') ?: new MateriaPrima(nombre: 'Pimienta', descripcion: 'Para pimentar').save()
 
-//		Paquete paq =  Paquete.findByName('A') ?: new Paquete(name: "A", descripcion: "Paquete tipo A", capacidad: 23, tiempoArmado: Duration.standardMinutes(30))
-//		paq.save()
-//
-//		Paquete paq2 =Paquete.findByName('B') ?:  new Paquete(name: "B", descripcion: "Paquete tipo B", capacidad: 10, tiempoArmado: Duration.standardMinutes(20))
-//		paq2.save()
+		Paquete paq =  Paquete.findByName('A') ?: new Paquete(name: "A", descripcion: "Paquete tipo A", capacidad: 23, tiempoArmado: Duration.standardMinutes(30))
+		paq.save()
+
+		Paquete paq2 =Paquete.findByName('B') ?:  new Paquete(name: "B", descripcion: "Paquete tipo B", capacidad: 10, tiempoArmado: Duration.standardMinutes(20))
+		paq2.save()
 
 		if( Producto.findByNombre('Sal y Pimienta')==null){
 			Producto p = new Producto(nombre: 'Sal y Pimienta')
-			p.addToComposicion(new ComponenteProducto(materiaPrima: sal, porcentaje: 60))
-			p.addToComposicion(new ComponenteProducto(materiaPrima: pimienta, porcentaje: 40))
 			p.save()
 
+			if (!p.coeficiente.contains(sal)) {
+				ComponenteProducto.create p, sal,60
+			}
+			if (!p.coeficiente.contains(pimienta)) {
+				ComponenteProducto.create p, pimienta,40
+			}
 			EstadoPedido.values()[0..4].each { def ep ->
 				2.times { def time ->
 					def items = [new ItemPedido(producto: p, paquete: paq, cantidad: 5 * (1 + time) * (1 + ep.ordinal()))]

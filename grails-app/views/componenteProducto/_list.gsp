@@ -13,14 +13,14 @@
 			</tr>
 		</thead>
 		<tbody>
-		<g:each in="${productoInstance.composicion}" status="i" var="componenteProductoInstance">
+		<g:each in="${productoInstance.coeficienteTotal}" status="i" var="componenteProductoInstance">
 			<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 			
-				<td><g:link controller="componenteProducto" action="edit" id="${componenteProductoInstance.id}" params="[productoId: productoInstance.id]">${fieldValue(bean: componenteProductoInstance, field: "materiaPrima")}</g:link></td>
+				<td><g:link controller="componenteProducto" action="edit" id="${componenteProductoInstance?.materiaPrima}" params="[productoId: productoInstance?.id]">${ componenteProductoInstance?.materiaPrima}</g:link></td>
 			
 				<td>${fieldValue(bean: componenteProductoInstance, field: "porcentaje")}</td>
 			
-				<td><g:link controller="componenteProducto" action="delete" id="${componenteProductoInstance.id}" params="[productoId: productoInstance.id]"><img alt="Eliminar" src="${resource(dir: 'images/skin', file:'database_delete.png')}" /></g:link></td>
+				<td><g:link controller="componenteProducto" action="delete" id="${componenteProductoInstance?.materiaPrima}" params="[productoId: productoInstance?.id]"><img alt="Eliminar" src="${resource(dir: 'images/skin', file:'database_delete.png')}" /></g:link></td>
 			
 			</tr>
 		</g:each>

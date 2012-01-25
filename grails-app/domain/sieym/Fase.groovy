@@ -6,4 +6,10 @@ class Fase {
 
 	String nombre
 	Duration duracion
+	
+	
+	
+	static constraints = {
+		nombre unique:true
+	}
 }
