@@ -112,11 +112,11 @@ class BootStrap {
 		MateriaPrima sal = MateriaPrima.findByNombre('Sal') ?: new MateriaPrima(nombre: 'Sal', descripcion: 'Para salar').save()
 		MateriaPrima pimienta = MateriaPrima.findByNombre('Pimienta') ?: new MateriaPrima(nombre: 'Pimienta', descripcion: 'Para pimentar').save()
 
-		Paquete paq =  Paquete.findByName('A') ?: new Paquete(name: "A", descripcion: "Paquete tipo A", capacidad: 23, tiempoArmado: Duration.standardMinutes(30))
-		paq.save()
-
-		Paquete paq2 =Paquete.findByName('B') ?:  new Paquete(name: "B", descripcion: "Paquete tipo B", capacidad: 10, tiempoArmado: Duration.standardMinutes(20))
-		paq2.save()
+//		Paquete paq =  Paquete.findByName('A') ?: new Paquete(name: "A", descripcion: "Paquete tipo A", capacidad: 23, tiempoArmado: Duration.standardMinutes(30))
+//		paq.save()
+//
+//		Paquete paq2 =Paquete.findByName('B') ?:  new Paquete(name: "B", descripcion: "Paquete tipo B", capacidad: 10, tiempoArmado: Duration.standardMinutes(20))
+//		paq2.save()
 
 		if( Producto.findByNombre('Sal y Pimienta')==null){
 			Producto p = new Producto(nombre: 'Sal y Pimienta')
@@ -133,9 +133,9 @@ class BootStrap {
 			}
 		}
 
-		def items = [new ItemPedido(producto: pA, paquete: paq2, cantidad: 10)]
-		Pedido ped = new Pedido(cliente: user, items: items, estado: EstadoPedido.Señado, fechaPedido: new Date(), direccionEntrega: "Formosa 1234")
-		ped.save()
+//		def items = [new ItemPedido(producto: pA, paquete: paq2, cantidad: 10)]
+//		Pedido ped = new Pedido(cliente: user, items: items, estado: EstadoPedido.Señado, fechaPedido: new Date(), direccionEntrega: "Formosa 1234")
+//		ped.save()
 	}
 
 	def destroy = {
