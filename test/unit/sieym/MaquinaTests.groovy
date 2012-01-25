@@ -48,6 +48,12 @@ class MaquinaTests {
 		Maquina mqFechaDeInicio = new Maquina(reservas: reservas)
 		def disp = mqFechaDeInicio.verificarDisponibilidad(fechaDeInicio)
 		assert 2 == disp.size()
+		
+		DateTime twoHoursAhead = now.plusHours(2)
+		Maquina mqTwoHoursAhead = new Maquina(reservas: reservas)
+		disp = mqTwoHoursAhead.verificarDisponibilidad(twoHoursAhead)
+		assert 3 == disp.size()
+		assert disp[0].start == twoHoursAhead
 	}
 
 }
