@@ -18,12 +18,19 @@ class Maquina {
 	float rendimiento
 	int temperatura
 
-	public List<Interval> verificarDisponibilidad() {
+	public List<Interval> verificarDisponibilidad(DateTime start) {
+		if(start == null) {
+			start = new DateTime()
+		}
 		// no hay reservas, cualquier intervalo esta disponible
-		if(!this.reservas) return null
-		List<Interval> sorted = this.reservas.sort({it.intervalo.start})
-		DateTime now = new DateTime();
-		List<Interval> disponibilidad = [new Interval(now, sorted.first().intervalo.start)]
+		if(!this.reservas) {
+			 return [new Interval(start, Years.ONE)]
+		}
+		def sorted = this.reservas.findAll({
+			it.intervalo.start.isAfter(start)
+		}).sort({it.intervalo.start})
+			
+		List<Interval> disponibilidad = [new Interval(start, sorted.first().intervalo.start)]
 		def prevEnd = sorted.first().intervalo.end
 		disponibilidad += sorted.tail().collect(
 				{
