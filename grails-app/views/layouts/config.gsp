@@ -10,6 +10,7 @@
 				<li><a href="${createLink(uri: '/fase')}"><g:message code="default.config.fases.label"/></a></li>
 				<li><a href="${createLink(uri: '/logistica')}"><g:message code="default.config.logistica.label"/></a></li>
 				<li><a href="${createLink(uri: '/materiaPrima')}"><g:message code="default.config.materiaprima.label"/></a></li>
+				<li><a href="${createLink(uri: '/producto')}"><g:message code="default.config.producto.label"/></a></li>
 				<li><a href="${createLink(uri: '/maquina')}"><g:message code="default.config.maquinas.label"/></a></li>
 				<li><a href="${createLink(uri: '/paquete')}"><g:message code="default.config.paquetes.label"/></a></li>
 			</ul>

@@ -1,7 +1,8 @@
 package sieym
 
 import org.springframework.dao.DataIntegrityViolationException
-
+import sieym.Producto
+import sieym.MateriaPrima
 class ComponenteProductoController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "GET"]
@@ -11,19 +12,24 @@ class ComponenteProductoController {
     }
 
     def create() {
-        [componenteProductoInstance: new ComponenteProducto(params), productoId: params.productoId]
+		
+		[ productoId: params.productoId]
     }
 
     def save() {
-        def productoInstance = Producto.get(params.productoId)
-        def componenteProductoInstance = new ComponenteProducto(params)
-		productoInstance.addToComposicion(componenteProductoInstance)
-        if (!productoInstance.save(flush: true)) {
-            render(view: "create", model: [componenteProductoInstance: componenteProductoInstance, productoId: params.productoId])
-            return
-        }
+        Producto productoInstance = Producto.get(params.productoId)
+		Integer porcentaje=Integer.valueOf(params?.porcentaje);
+		MateriaPrima materia =MateriaPrima.get(params.materiaPrima.id)
+		if (!productoInstance.coeficiente.contains(materia)) {
+			ComponenteProducto.create productoInstance, materia,porcentaje
+		}else{
+			flash.error="No se pueden agregar 2 veces el mismo componente"
+			render(view: "create", model: [ productoId: params.productoId])
+			return
+		
+		}
 
-		flash.message = message(code: 'default.created.message', args: [message(code: 'componenteProducto.label', default: 'ComponenteProducto'), componenteProductoInstance.id])
+		flash.message = message(code: 'default.created.message', args: [message(code: 'componenteProducto.label', default: 'ComponenteProducto')])
         redirect(controller: "producto", action: "show", id: productoInstance.id)
     }
 

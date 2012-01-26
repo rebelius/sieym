@@ -26,13 +26,15 @@
 			
 				<li class="fieldcontain">
 					<span id="composicion-label" class="property-label"><g:message code="producto.composicion.label" default="Composicion" /> </span>
-						<span style="margin-left: 5px;" class="buttons"><g:link class="save" controller="componenteProducto" action="create" params="[productoId: productoInstance.id]"> Agregar</g:link></span>
-					
-							<g:render template="/componenteProducto/list"/>
+						<span style="margin-left: 5px;" class=""><g:link class="save" controller="componenteProducto" action="create" params="[productoId: productoInstance.id]"> Agregar</g:link></span>
+						<br>
 					
 				</li>
 			
 			</ol>
+			<fieldset>
+					<g:render template="/componenteProducto/list"/>
+			</fieldset>		
 			<g:form>
 				<fieldset class="buttons">
 					<g:hiddenField name="id" value="${productoInstance?.id}" />

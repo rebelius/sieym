@@ -120,10 +120,14 @@ class BootStrap {
 
 		if( Producto.findByNombre('Sal y Pimienta')==null){
 			Producto p = new Producto(nombre: 'Sal y Pimienta')
-			p.addToComposicion(new ComponenteProducto(materiaPrima: sal, porcentaje: 60))
-			p.addToComposicion(new ComponenteProducto(materiaPrima: pimienta, porcentaje: 40))
 			p.save()
 
+			if (!p.coeficiente.contains(sal)) {
+				ComponenteProducto.create p, sal,60
+			}
+			if (!p.coeficiente.contains(pimienta)) {
+				ComponenteProducto.create p, pimienta,40
+			}
 			EstadoPedido.values()[0..4].each { def ep ->
 				2.times { def time ->
 					def items = [new ItemPedido(producto: p, paquete: paq, cantidad: 5 * (1 + time) * (1 + ep.ordinal()))]
@@ -133,9 +137,9 @@ class BootStrap {
 			}
 		}
 
-		def items = [new ItemPedido(producto: pA, paquete: paq2, cantidad: 10)]
-		Pedido ped = new Pedido(cliente: user, items: items, estado: EstadoPedido.Señado, fechaPedido: new Date(), direccionEntrega: "Formosa 1234")
-		ped.save()
+//		def items = [new ItemPedido(producto: pA, paquete: paq2, cantidad: 10)]
+//		Pedido ped = new Pedido(cliente: user, items: items, estado: EstadoPedido.Señado, fechaPedido: new Date(), direccionEntrega: "Formosa 1234")
+//		ped.save()
 	}
 
 	def destroy = {

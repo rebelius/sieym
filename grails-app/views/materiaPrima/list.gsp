@@ -12,7 +12,6 @@
 			<div class="nav" role="navigation">
 				<ul class="main">
 					<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
-					<li><g:link class="list" controller="producto" action="list"><g:message code="default.list.label" args="['Producto']" /></g:link></li>
 				</ul>
 			</div>
 			<h1><g:message code="default.list.label" args="[entityName]" /></h1>
