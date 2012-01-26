@@ -16,11 +16,11 @@
 		<g:each in="${productoInstance.coeficienteTotal}" status="i" var="componenteProductoInstance">
 			<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 			
-				<td><g:link controller="componenteProducto" action="edit" id="${componenteProductoInstance?.materiaPrima}" params="[productoId: productoInstance?.id]">${ componenteProductoInstance?.materiaPrima}</g:link></td>
+				<td>${ componenteProductoInstance?.materiaPrima}</td>
 			
 				<td>${fieldValue(bean: componenteProductoInstance, field: "porcentaje")}</td>
 			
-				<td><g:link controller="componenteProducto" action="delete" id="${componenteProductoInstance?.materiaPrima}" params="[productoId: productoInstance?.id]"><img alt="Eliminar" src="${resource(dir: 'images/skin', file:'database_delete.png')}" /></g:link></td>
+				<td><g:link controller="componenteProducto" action="delete" id="${componenteProductoInstance?.materiaPrima?.id}" params="[productoId: productoInstance?.id]"><img alt="Eliminar" src="${resource(dir: 'images/skin', file:'database_delete.png')}" /></g:link></td>
 			
 			</tr>
 		</g:each>

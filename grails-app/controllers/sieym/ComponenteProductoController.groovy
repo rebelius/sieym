@@ -75,24 +75,15 @@ class ComponenteProductoController {
     }
 
     def delete() {
-        def productoInstance = Producto.get(params.productoId)
-        def componenteProductoInstance = ComponenteProducto.get(params.id)
-        if (!componenteProductoInstance) {
-			flash.message = message(code: 'default.not.found.message', args: [message(code: 'componenteProducto.label', default: 'ComponenteProducto'), params.id])
-            redirect(controller: "producto", action: "show", id: params.productoId)
-            return
-        }
-
-        try {
-			productoInstance.removeFromComposicion(componenteProductoInstance)
-			productoInstance.save(flush: true)
-            componenteProductoInstance.delete(flush: true)
-			flash.message = message(code: 'default.deleted.message', args: [message(code: 'componenteProducto.label', default: 'ComponenteProducto'), params.id])
-            redirect(controller: "producto", action: "show", id: params.productoId)
-        }
-        catch (DataIntegrityViolationException e) {
-			flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'componenteProducto.label', default: 'ComponenteProducto'), params.id])
-            redirect(controller: "producto", action: "show", id: params.productoId)
-        }
+		Producto productoInstance = Producto.get(params.productoId)
+		Long id=Long.valueOf(params.id);
+		MateriaPrima materia =MateriaPrima.get(id)
+		if (productoInstance.coeficiente.contains(materia)) {
+			ComponenteProducto.remove productoInstance, materia
+		}
+		
+        redirect(controller: "producto", action: "show", id: params.productoId)
+        return
+        
     }
 }
