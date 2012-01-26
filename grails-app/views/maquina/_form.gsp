@@ -20,7 +20,7 @@
 
 <div class="fieldcontain ${hasErrors(bean: maquinaInstance, field: 'capacidad', 'error')} required">
 	<label for="capacidad">
-		<g:message code="maquina.capacidad.label" default="Capacidad" />
+		<g:message code="maquina.capacidad.label" default="Capacidad (Tn)" />
 		<span class="required-indicator">*</span>
 	</label>
 	<g:field type="number" name="capacidad" required="" value="${fieldValue(bean: maquinaInstance, field: 'capacidad')}"/>

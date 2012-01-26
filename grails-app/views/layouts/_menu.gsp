@@ -1,6 +1,7 @@
 
 		<div class="nav" role="navigation">
 			<ul class="main">
+			<g:if test="${session?.user?.role}">
 				<g:if test="${session.user.role==sieym.Role.OPERATOR}">
 					<li><a href="${createLink(uri: '/pedido')}"><g:message code="navigation.orders"/></a></li>
 					<li><a href="${createLink(uri: '/logistic')}"><g:message code="navigation.delivery"/></a></li>
@@ -25,6 +26,6 @@
 					<li><a href="${createLink(controller: 'auth', action: 'dologout')}"><g:message code="navigation.logout"/></a></li>
 				
 				</g:else>
-			
+			</g:if>
 			</ul>
 		</div>
