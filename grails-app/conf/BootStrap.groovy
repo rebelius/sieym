@@ -80,11 +80,14 @@ class BootStrap {
 		Maquina mq3 = Maquina.findByDescripcion('MQ_SAP_50') ?:new Maquina(descripcion: "MQ_SAP_50", fase: sapecado, capacidad: 50, rendimiento: 0.82)
 
 		Maquina mq4 = Maquina.findByDescripcion('MQ_CAN_100') ?:new Maquina(descripcion: "MQ_CAN_100", fase: canchado, capacidad: 100, rendimiento: 0.6)
-		Maquina mq5 =Maquina.findByDescripcion('MQ_CAN_120') ?:new Maquina(descripcion: "MQ_CAN_120", fase: canchado, capacidad: 120, rendimiento: 0.72)
+		Maquina mq5 = Maquina.findByDescripcion('MQ_CAN_120') ?:new Maquina(descripcion: "MQ_CAN_120", fase: canchado, capacidad: 120, rendimiento: 0.72)
+		Maquina mq7 = Maquina.findByDescripcion('MQ_CAN_80') ?:new Maquina(descripcion: "MQ_CAN_80", fase: canchado, capacidad: 80, rendimiento: 0.82)
 
 		Maquina mq6 = Maquina.findByDescripcion('MQ_MOL_150') ?:new Maquina(descripcion: "MQ_MOL_150", fase: molienda, capacidad: 150, rendimiento: 0.82)
+		Maquina mq8 = Maquina.findByDescripcion('MQ_MOL_90') ?:new Maquina(descripcion: "MQ_MOL_90", fase: molienda, capacidad: 90, rendimiento: 0.88)
+		Maquina mq9 = Maquina.findByDescripcion('MQ_MOL_60') ?:new Maquina(descripcion: "MQ_MOL_60", fase: molienda, capacidad: 60, rendimiento: 0.75)
 
-		def maquinas = [mq1, mq2, mq3, mq4, mq5, mq6]
+		def maquinas = [mq1, mq2, mq3, mq4, mq5, mq6, mq7, mq8, mq9]
 		maquinas*.save()
 
 		MateriaPrima mp1 =  MateriaPrima.findByNombre('MP1') ?:this.createMateriaPrima("MP1", ['12', '25', '32'])

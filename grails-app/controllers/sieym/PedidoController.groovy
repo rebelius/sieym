@@ -5,7 +5,7 @@ import org.springframework.dao.DataIntegrityViolationException
 class PedidoController {
 
 
-	PedidoService pedidoService
+	def pedidoService
 
 	def index() {
 		redirect(action: "list", params: params)
@@ -14,8 +14,13 @@ class PedidoController {
 	def planificar() {
 		Pedido pedido = Pedido.get(params.id)
 		if(pedido.items){
-			def alt = this.pedidoService.planificar(pedido)
-			[pedido: pedido] + alt
+			try {
+				def plan = pedidoService.planificar(pedido)
+				return [pedido: pedido] + plan
+			} catch (IllegalStateException e) {
+				flash.error = e.getMessage()
+				return [pedido: pedido]
+			}
 		} else {
 			flash.message = "No se puede planificar un Pedido sin Items"
 		}
@@ -103,10 +108,10 @@ class PedidoController {
 				])
 			}
 			redirect(action: "list", 'params': [estado:params?.estado])
-			
+
 		}
-		
-		
+
+
 	}
 	def cambiarEstado() {
 		def pedidoInstance = Pedido.get(params.id)
@@ -150,9 +155,9 @@ class PedidoController {
 				pedidoInstance.id
 			])
 			redirect(action: "show", id: pedidoInstance.id)
-			return 
+			return
 		}
-			
+
 		def prevSeña = pedidoInstance.seña
 		pedidoInstance.properties = params
 		if(prevSeña == null && pedidoInstance.seña != null) {

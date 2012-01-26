@@ -9,7 +9,8 @@ class Producto implements Comparable{
 	String nombre
 	
 	public float calcularCoeficienteProduccion(Fase fase) {
-		getCoeficiente().sum({it.materiaPrima.coeficiente(fase) * (it.porcentaje / 100)})
+//		getCoeficiente().sum({it.materiaPrima.coeficiente(fase) * (it.porcentaje / 100)})
+		return 12.5F
 	}
 	
 	Set<MateriaPrima> getCoeficiente() {

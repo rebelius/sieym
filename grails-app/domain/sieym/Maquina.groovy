@@ -3,8 +3,7 @@ package sieym
 import java.util.List;
 
 import org.joda.time.DateTime;
-import org.joda.time.Days;
-import org.joda.time.Hours;
+import org.joda.time.Duration
 import org.joda.time.Interval;
 import org.joda.time.Years;
 
@@ -18,7 +17,7 @@ class Maquina {
 	float rendimiento
 	int temperatura
 
-	public List<Interval> verificarDisponibilidad(DateTime start) {
+	public List<Interval> verificarDisponibilidad(DateTime start, Duration minDuration) {
 		if(start == null) {
 			start = new DateTime()
 		}
@@ -47,6 +46,7 @@ class Maquina {
 					prevEnd = it.intervalo.end
 				})
 		disponibilidad += new Interval(prevEnd, Years.ONE)
+		disponibilidad.findAll {it.toDuration().isLongerThan(minDuration)}
 	}
 
 	public static List<List<Maquina>> agrupar(List maquinas, float pesoPedido) {
