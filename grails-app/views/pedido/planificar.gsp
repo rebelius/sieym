@@ -24,34 +24,33 @@
 				${pedido.calcularPesoTotal()}
 				Tn
 			</h3>
-			<h2 style="margin-top: 10px;">Posibles Alternativas</h2>
+			<h2 style="margin-top: 10px;">Cronograma de Reservas</h2>
 
 
 			<table>
 				<thead>
 					<tr>
 
+						<th>Fase</th>
 						<th>Maquina</th>
-
-						<g:each in="${fases}" var="fase">
-							<th>Fase - ${fase.nombre}</th>
-						</g:each>
+						<th>Entrada</th>
+						<th>Salida</th>
 
 					</tr>
 				</thead>
 				<tbody>
 					<g:each in="${fases}" var="fase">
-						<g:each in="${resPorFases[fase]}" var="res" status="i">
+						<g:each in="${reservas[fase].reservas}" var="res" status="i">
 
-							<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
+							<tr class="${(j % 2) == 0 ? 'even' : 'odd'}">
 
-								<td>
-									${res.maquina.descripcion }
-								</td>
+								<td>${fase.nombre}</td>
+	
+								<td>${res.key.descripcion}</td>
 
-								<td>fase 1</td>
-								<td>fase 2</td>
-								<td>fase 3</td>
+								<td>${res.value.intervalo.start}</td>
+								
+								<td>${res.value.intervalo.end}</td>
 
 							</tr>
 

@@ -8,8 +8,9 @@ class PedidoService {
 	def planificar(Pedido pedido) {
 		def fases = Fase.listOrderById()
 		def resPorFase = this.generarReservasPorFase(pedido, fases)
+		println resPorFase
 		def tiempoEmpaquetado = pedido.cacularTiempoEmpaquetado()
-		def fechaPedidoTerminado = resPorFase[fases.last()].intervalo.end.plus(tiempoEmpaquetado)
+		def fechaPedidoTerminado = resPorFase[fases.last()]['fechaSalida'].plus(tiempoEmpaquetado)
 		[fases: fases, reservas: resPorFase, tiempoEmpaquetado: tiempoEmpaquetado,
 			fechaPedidoTerminado: fechaPedidoTerminado]
 	}
@@ -18,16 +19,17 @@ class PedidoService {
 		def resPorFase = [:]
 		def comienzoDeFase = new DateTime()
 		fases.each { Fase fase ->
-			def reservas = []
+			def reservas = [:]
 			def maquinas = Maquina.findAllByFase(fase)
 			def intervaloLibre = maquinas.first().verificarDisponibilidad(comienzoDeFase).first()
 			maquinas.each {
-				def res = new ReservaMaquina(pedido: pedido, intervalo: new Interval(comienzoDeFase,  fase.duracion))
+				def res = new ReservaMaquina(pedido: pedido)
+				res.intervalo = new Interval(comienzoDeFase,  fase.duracion)
 				it.addToReservas(res).save(flush: true)
-				reservas += res
+				reservas[it] = res
+				comienzoDeFase = res.intervalo.end
 			}
-			resPorFase.put(fase, reservas)
-			comienzoDeFase = reservas.first().intervalo.end
+			resPorFase.put(fase, [reservas: reservas, fechaSalida: comienzoDeFase])
 		}
 		return resPorFase
 	}
