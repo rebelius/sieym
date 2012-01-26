@@ -8,7 +8,6 @@ class PedidoService {
 	def planificar(Pedido pedido) {
 		def fases = Fase.listOrderById()
 		def resPorFase = this.generarReservasPorFase(pedido, fases)
-		println resPorFase
 		def tiempoEmpaquetado = pedido.cacularTiempoEmpaquetado()
 		def fechaPedidoTerminado = resPorFase[fases.last()]['fechaSalida'].plus(tiempoEmpaquetado)
 		[fases: fases, reservas: resPorFase, tiempoEmpaquetado: tiempoEmpaquetado,

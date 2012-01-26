@@ -33,7 +33,7 @@ environments {
 //            dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
 //            url = "jdbc:h2:mem:devDb"
             dbCreate = "update" // one of 'create', 'create-drop','update'
-             url = "jdbc:mysql://localhost/sieym?autoReconnect=true"
+             url = "jdbc:mysql://localhost/sieym?autoReconnect=true&createDatabaseIfNotExist=true"
         }
     }
     test {

@@ -40,17 +40,22 @@
 				</thead>
 				<tbody>
 					<g:each in="${fases}" var="fase">
+<%--						<g:set var="cambioFase" value="${true}"/>--%>
 						<g:each in="${reservas[fase].reservas}" var="res" status="i">
 
-							<tr class="${(j % 2) == 0 ? 'even' : 'odd'}">
+							<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 
+<%--								<g:if test="${cambioFase}">--%>
+<%--									<td rowspan="${reservas[fase].reservas.size()}">${fase.nombre}</td>--%>
+<%--									<g:set var="cambioFase" value="${false}"/>--%>
+<%--								</g:if>--%>
 								<td>${fase.nombre}</td>
 	
 								<td>${res.key.descripcion}</td>
 
-								<td>${res.value.intervalo.start}</td>
+								<td><joda:format value="${res.value.intervalo.start}" pattern="dd/MM/yyyy - hh:mm" /></td>
 								
-								<td>${res.value.intervalo.end}</td>
+								<td><joda:format value="${res.value.intervalo.end}" pattern="dd/MM/yyyy - hh:mm" /></td>
 
 							</tr>
 
@@ -59,11 +64,11 @@
 				</tbody>
 			</table>
 
-			<p>
+			<p style="margin: 10px;">
 				El tiempo de empaquetado del Pedido es de
-				${tiempoEmpaquetado.standardHours}hs y el mismo estara listo para el
+				<strong>${tiempoEmpaquetado.standardHours}hs</strong> y el mismo estara listo para el
 				dia
-				${fechaPedidoTerminado}
+				<strong><joda:format value="${fechaPedidoTerminado}" pattern="dd/MM/yyyy - hh:mm" /></strong>
 			</p>
 
 		</g:else>
