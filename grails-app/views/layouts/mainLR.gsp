@@ -37,12 +37,6 @@
 		</div>
 		<g:render template="/layouts/menu" ></g:render>
 		
-			<g:if test="${flash.message}">
-			<div class="message" role="status">${flash.message}</div>
-			</g:if>
-			<g:if test="${flash.error}">
-			<div class="error" role="status">${flash.error}</div>
-			</g:if>
 		<g:layoutBody/>
 		<div class="footer" role="contentinfo"></div>
 		<div id="spinner" class="spinner" style="display:none;"><g:message code="spinner.alt" default="Loading&hellip;"/></div>

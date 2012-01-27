@@ -14,7 +14,7 @@
 		<h1>Planificacion de Pedido</h1>
 
 		<g:if test="${flash.error}">
-			<div class="error" role="status">
+			<div class="errors" role="status">
 				${flash.error}
 			</div>
 		</g:if>

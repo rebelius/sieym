@@ -5,7 +5,7 @@ import org.springframework.dao.DataIntegrityViolationException
 class PedidoController {
 
 
-	def pedidoService
+	def pedidoGeneralService
 
 	def index() {
 		redirect(action: "list", params: params)
@@ -13,9 +13,44 @@ class PedidoController {
 
 	def planificar() {
 		Pedido pedido = Pedido.get(params.id)
+		
+		Map<Paquete,Integer>paquetesTotales= new TreeMap<Paquete,Integer>();
+		pedido.items.each {
+			if(paquetesTotales.get(it.paquete)!=null){
+				println paquetesTotales.get(it.paquete)
+				Integer val=paquetesTotales.get(it.paquete)
+				val+=it.cantidad
+				paquetesTotales.put(it.paquete, val)
+				println paquetesTotales.get(it.paquete)
+			}else{
+				paquetesTotales.put(it.paquete, it.cantidad)
+			}
+		}
+		def paquetes=Paquete.list()
+		boolean cantidad=true
+		paquetes.each {
+			if(paquetesTotales.get(it) <=it.cantidad){
+				println "cantidad feliz cantidad total del pedido "+paquetesTotales.get(it)+" nombre fabrica "+it.name+" cantidad total de la fabrica"+it.cantidad
+			}	else{
+				if(flash?.error){
+					flash.error += "<li>Stock Insuficiente Del tipo de paquete "+it.name+" , faltan  "+(paquetesTotales.get(it)-it.cantidad)+" paquetes</li>"
+				}else{
+					flash.error = "<li>Stock Insuficiente Del tipo de paquete "+it.name+" , faltan  "+(paquetesTotales.get(it)-it.cantidad)+" paquetes</li>"
+				
+				}
+				println "cantidad triste cantidad total del pedido "+paquetesTotales.get(it)+" nombre fabrica "+it.name+" cantidad total de la fabrica"+it.cantidad
+			}
+			
+		}
+		if(flash?.error){
+			redirect(action: "show", id: pedido.id)
+			return
+			
+		}
+		
 		if(pedido.items){
 			try {
-				def plan = pedidoService.planificar(pedido)
+				def plan = pedidoGeneralService.planificar(pedido)
 				return [pedido: pedido] + plan
 			} catch (IllegalStateException e) {
 				flash.error = e.getMessage()
@@ -61,6 +96,8 @@ class PedidoController {
 
 	def show() {
 		def pedidoInstance = Pedido.get(params.id)
+		
+//		pedidoInstance.estado=sieym.EstadoPedido.Señado
 		if (!pedidoInstance) {
 			flash.message = message(code: 'default.not.found.message', args: [
 				message(code: 'pedido.label', default: 'Pedido'),

@@ -12,7 +12,7 @@
 			<div class="message" role="status">${flash.message}</div>
 			</g:if>
 			<g:if test="${flash.error}">
-			<div class="error" role="status">${flash.error}</div>
+			<div class="errors" role="status">${flash.error}</div>
 			</g:if>
 		<div class="nav side" role="navigation">
 			<ul>

@@ -2,10 +2,17 @@ package sieym
 
 
 class Sobrante {
-	
+	Pedido pedido
 	Producto producto
 	int cantidad
-	Date disponible
+	boolean disponible
 	
-	
+	def beforeInsert = {
+		disponible = true
+	}
+	static constraints = {
+		pedido nullable: true
+		producto nullable: false
+		cantidad nullable:false,min:1
+	}
 }

@@ -30,6 +30,7 @@ class Pedido {
 	List items
 	Date createdDate
 	Date lastModifiedDate
+	
 	def beforeInsert = {
 		createdDate = new Date()
 	}
