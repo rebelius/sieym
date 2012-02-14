@@ -92,6 +92,20 @@ log4j = {
            'net.sf.ehcache.hibernate'
 }
 
+
+grails {
+	mail {
+		host = "smtpout.asia.secureserver.net "
+		port = 465
+		username = "sieym.s.a@gmail.com"
+		password = "sieym123!"
+		props = ["mail.smtp.auth":"true",
+					"mail.smtp.socketFactory.port":"465",
+					"mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
+					"mail.smtp.socketFactory.fallback":"false"]
+	}
+}
+grails.mail.default.from="sieym.s.a@gmail.com"
 // Added by the Joda-Time plugin:
 //grails.gorm.default.mapping = {
 //	"user-type" type: org.jadira.usertype.dateandtime.joda.PersistentDateTimeAsString, class: org.joda.time.DateTime

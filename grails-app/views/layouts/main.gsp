@@ -24,11 +24,11 @@
 	<body>
 		<div id="header" role="banner">
 		
-        	<a href="<g:createLink controller="index"/>"  style="padding:1px 1px 1px 21px;"><img src="${resource(dir:'images',file:'Logo SIEYM.png')}" alt="DineroTaxi.com" title="DineroTaxi.com" border="0" /></a>
+        	<a href="<g:createLink controller="index"/>"  style="width: 80%;padding:1px 1px 1px 21px;"><img src="${resource(dir:'images',file:'Logo SIEYM.png')}" alt="DineroTaxi.com" title="DineroTaxi.com" border="0" /></a>
 		
-			<h1 style="width: 80%;font-size: 24px;margin:62px 2px 3px 4px;" align="top">Sistema Integral para la Elaboración de la Yerba Mate</h1>
 			<g:if test="${session.user}">
-				${session.user.name} (${session.user.role})
+			<font align="right" style="padding:1px 1px 1px 266px;font-size: 15px">
+				${session.user.name} (${session.user.role})</font>
 			</g:if>
 		</div>
 		<g:render template="/layouts/menu" ></g:render>

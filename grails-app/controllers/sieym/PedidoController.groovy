@@ -6,7 +6,7 @@ class PedidoController {
 
 
 	def pedidoGeneralService
-
+	def mailService
 	def index() {
 		redirect(action: "list", params: params)
 	}
@@ -149,6 +149,18 @@ class PedidoController {
 					params.id
 				])
 			}
+			try{
+				mailService.sendMail {
+					to session.user.email
+					from conf.ui.register.emailFrom
+					subject conf.ui.register.emailSubject
+					html "Su pedido Numero" +pedidoInstance+" a sido aceptado.Muchas Gracias"
+				}
+			}catch (Exception e){
+				println ""
+			
+			}
+			
 			redirect(action: "list", 'params': [estado:params?.estado])
 
 		}
@@ -208,6 +220,19 @@ class PedidoController {
 
 		if (!pedidoInstance.save(flush: true)) {
 			render(view: "edit", model: [pedidoInstance: pedidoInstance])
+			
+			
+			try{
+				mailService.sendMail {
+					to session.user.email
+					from conf.ui.register.emailFrom
+					subject conf.ui.register.emailSubject
+					html "Su pedido Numero" +pedidoInstance+" a sido Rechazado.Por Favor Contactese con la Empresa Muchas Gracias"
+				}
+			}catch (Exception e){
+				println ""
+			
+			}
 			return
 		}
 
