@@ -67,6 +67,11 @@ class PedidoController {
 			EstadoPedido estado = EstadoPedido.valueOf(params.estado)
 			[pedidoInstanceList: Pedido.findAllByEstado(estado, params), pedidoInstanceTotal: Pedido.countByEstado(estado),estado:estado]
 		} else {
+			EstadoPedido estado = EstadoPedido.Planificado
+			Pedido.findAllByEstado(estado, params).each{
+//			it.estado=EstadoPedido.Entregado
+//			it.save(flush:true)
+			}
 			[pedidoInstanceList: Pedido.list(params), pedidoInstanceTotal: Pedido.count()]
 		}
 	}
