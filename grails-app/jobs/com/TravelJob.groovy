@@ -9,8 +9,8 @@ class TravelJob {
     def execute() {
 		def dat= new Date()
 		def log=Logistica.get(1)
-		
-		Pedido.findAllByEstado( EstadoPedido.EnViaje).each {
+		EstadoPedido es=EstadoPedido.EnViaje
+		Pedido.findAllByEstado( es).each {
 			Long l= it.km*log.tiempoPorKm
 			def d= it.lastModifiedDate.getTime()
 			def ff=d +l

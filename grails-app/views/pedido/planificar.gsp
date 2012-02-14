@@ -24,12 +24,16 @@
 			</div>
 		</g:elseif>
 		<g:else>
-			<h3 style="margin-top: 10px;">
+			<h3 style="margin-top: 10px;color:blue">
 				Peso Total:
 				${pedido.calcularPesoTotal()}
 				Tn
 			</h3>
-			<h2 style="margin-top: 10px;">Cronograma de Reservas</h2>
+			<h3 style="margin-top: 10px;color:blue">
+				SALIDA DE PRODUCCIÓN:
+				<strong><joda:format value="${plan.fechaPedidoTerminado}" pattern="dd/MM/yyyy - hh:mm" /></strong>
+			</h3>
+			<h2 style="margin-top: 10px;">Cronograma de Producción</h2>
 
 
 			<table>
@@ -44,17 +48,16 @@
 					</tr>
 				</thead>
 				<tbody>
-					<g:each in="${fases}" var="fase" status="i">
+					<g:each in="${plan.fases}" var="fase" status="i">
 					
 						<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-
 							<td>${fase.nombre}</td>
 
-							<td>${reservas[(fase)].maquinas}</td>
+							<td>${plan.reservas[(fase)].maquinas}</td>
 
-							<td><joda:format value="${reservas[(fase)].intervalo.start}" pattern="dd/MM/yyyy - hh:mm" /></td>
+							<td><joda:format value="${plan.reservas[(fase)].intervalo.start}" pattern="dd/MM/yyyy - hh:mm" /></td>
 							
-							<td><joda:format value="${reservas[(fase)].intervalo.end}" pattern="dd/MM/yyyy - hh:mm" /></td>
+							<td><joda:format value="${plan.reservas[(fase)].intervalo.end}" pattern="dd/MM/yyyy - hh:mm" /></td>
 
 						</tr>
 
@@ -63,10 +66,8 @@
 			</table>
 
 			<p style="margin: 10px;">
-				El tiempo de empaquetado del Pedido es de
-				<strong>${tiempoEmpaquetado.standardHours}hs</strong> y el mismo estara listo para el
-				dia
-				<strong><joda:format value="${fechaPedidoTerminado}" pattern="dd/MM/yyyy - hh:mm" /></strong>
+				TIEMPO DE EMPAQUETADO=<strong>${plan.tiempoEmpaquetado.standardSeconds} millsSeconds / ${plan.tiempoEmpaquetado.standardSeconds/60} seg</strong>
+			
 			</p>
 
 		</g:else>

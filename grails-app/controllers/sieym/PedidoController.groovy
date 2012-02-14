@@ -51,7 +51,7 @@ class PedidoController {
 		if(pedido.items){
 			try {
 				def plan = pedidoGeneralService.planificar(pedido)
-				return [pedido: pedido] + plan
+				return [pedido: pedido,plan:plan] 
 			} catch (IllegalStateException e) {
 				flash.error = e.getMessage()
 				return [pedido: pedido]

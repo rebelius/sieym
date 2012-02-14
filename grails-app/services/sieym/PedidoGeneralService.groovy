@@ -44,31 +44,31 @@ class PedidoGeneralService {
 		
 		int ton= RealPedido.findAllByPedido(pedido).sum({it.cantidad	})
 		ton+=SobrantePedido.findAllByPedido(pedido).sum({it.cantidad	})?:0
-		println " Calcular Coeficiente de produccion por pedidos"
-		def desde = new DateTime()
-		Fase.list().each {
-			println " ------------   " +it.nombre+" -------------------"
-			float coef=pedido.calcularCoeficienteProduccion(it)
-			println "coeficiente produccion ${coef}"
-			def maq= Maquina.findAllByCapacidadGreaterThanEqualsAndFase(ton,it)?: Maquina.findAllByCapacidadLessThanEqualsAndFase(ton,it)
-			println maq
-			//verifica si la maquina lo puede contener sino trae todas las maquias
-			if( maq instanceof Maquina){
-				
-			}else{
-//			float tot=maq.rendimiento*(it.duracion.getStandardHours()/60)*coef
-//			println tot
-			def res = generarReserva(pedido, it, desde, maq)
-			desde = res.intervalo.end
-			
-			}
-			
-			println " -------------"
-		}
+	
+		def fases = Fase.listOrderById()
+		def resPorFase = this.generarReservasPorFase(pedido, fases,ton)
+		def tiempoEmpaquetado = pedido.cacularTiempoEmpaquetado()
+		def fechaPedidoTerminado = resPorFase[fases.last()]['intervalo'].end.plus(tiempoEmpaquetado)
+//		pedido.estado = EstadoPedido.Planificado
+//		pedido.save(flush: true)
+		[fases: fases, reservas: resPorFase, tiempoEmpaquetado: tiempoEmpaquetado,
+			fechaPedidoTerminado: fechaPedidoTerminado]
+//			pedido.estado=EstadoPedido.Planificado
+//			pedido.save(flush:true)
 		
 	}
-	def generarReserva(Pedido pedido, Fase fase, DateTime desde, List<Maquina> maquinas) {
-		Float pesoTotal = pedido.calcularPesoTotal([:])
+	def generarReservasPorFase(Pedido pedido, fases,int ton) {
+//		def desde = new DateTime()
+		def desde = null
+		fases.collectEntries { Fase fase ->
+			def maquinas = Maquina.findAllByFase(fase)
+			def res = generarReserva(pedido, fase, desde, maquinas,ton)
+			desde = res.intervalo.end
+			[fase, res]
+		}
+	}
+	def generarReserva(Pedido pedido, Fase fase, DateTime desde, List<Maquina> maquinas,int ton) {
+		Float pesoTotal = ton
 		Float capacidadTotal = maquinas.sum {it.capacidad}
 		if(pesoTotal > capacidadTotal) {
 			throw new IllegalStateException("El pedido excede la capacidad total para la Fase ${fase.nombre}. ${pesoTotal} > ${capacidadTotal}")

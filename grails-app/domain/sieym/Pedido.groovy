@@ -14,6 +14,7 @@ class Pedido {
 		camion nullable:true
 		createdDate  nullable:true
 		lastModifiedDate nullable:true
+		fase nullable:true
     }
 	
 	static hasMany = [items: ItemPedido]
@@ -31,7 +32,7 @@ class Pedido {
 	List items
 	Date createdDate
 	Date lastModifiedDate
-	
+	Fase fase
 	def beforeInsert = {
 		createdDate = new Date()
 	}
@@ -61,7 +62,7 @@ class Pedido {
 		return SobrantePedido.findAllByPedido(this)
 	}
 	public Duration calcularDuracion(Maquina mq){
-		long d = mq.fase.duracion.millis * mq.rendimiento * this.calcularCoeficienteProduccion(mq.fase)
+		long d = (mq.fase.duracion.millis * mq.rendimiento * this.calcularCoeficienteProduccion(mq.fase))/3240
 		new Duration(d)
 	}
 	
@@ -82,7 +83,7 @@ class Pedido {
 		this.items.each {
 			totalMinutes += it.paquete.tiempoArmado.getStandardMinutes() * it.cantidad
 		}
-		Duration.standardMinutes(totalMinutes)
+		Duration.standardSeconds(totalMinutes)
 	}
 	
 	public def generarAlternativasProduccion(List maquinas, Map sobrantes) {
