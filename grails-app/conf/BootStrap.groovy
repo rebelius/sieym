@@ -115,10 +115,10 @@ class BootStrap {
 		MateriaPrima sal = MateriaPrima.findByNombre('Sal') ?: new MateriaPrima(nombre: 'Sal', descripcion: 'Para salar').save()
 		MateriaPrima pimienta = MateriaPrima.findByNombre('Pimienta') ?: new MateriaPrima(nombre: 'Pimienta', descripcion: 'Para pimentar').save()
 
-		Paquete paq =  Paquete.findByName('A') ?: new Paquete(name: "A", descripcion: "Paquete tipo A", capacidad: 23, tiempoArmado: Duration.standardMinutes(30))
+		Paquete paq =  Paquete.findByName('A') ?: new Paquete(name: "A", descripcion: "Paquete tipo A", capacidad: 23,cantidad:20, tiempoArmado: Duration.standardMinutes(30))
 		paq.save()
 
-		Paquete paq2 =Paquete.findByName('B') ?:  new Paquete(name: "B", descripcion: "Paquete tipo B", capacidad: 10, tiempoArmado: Duration.standardMinutes(20))
+		Paquete paq2 =Paquete.findByName('B') ?:  new Paquete(name: "B", descripcion: "Paquete tipo B", capacidad: 10,cantidad:20, tiempoArmado: Duration.standardMinutes(20))
 		paq2.save()
 
 		if( Producto.findByNombre('Sal y Pimienta')==null){

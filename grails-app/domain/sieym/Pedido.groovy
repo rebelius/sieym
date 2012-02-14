@@ -46,7 +46,7 @@ class Pedido {
 		Map<Producto,Integer>paquetesTotales= new TreeMap<Producto,Integer>();
 		this.items.each {
 			if(paquetesTotales.get(it.producto)!=null){
-				println paquetesTotales.get(it.paquetepedido)
+				
 				Integer val=paquetesTotales.get(it.producto)
 				val+=it.paquete.capacidad*it.cantidad
 				paquetesTotales.put(it.producto, val)
