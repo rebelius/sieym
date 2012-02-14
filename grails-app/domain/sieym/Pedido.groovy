@@ -1,5 +1,6 @@
 package sieym
 
+import com.TotalProd
 import org.joda.time.Duration;
 
 class Pedido {
@@ -38,9 +39,27 @@ class Pedido {
 		lastModifiedDate = new Date()
 	}
 	public float calcularCoeficienteProduccion(Fase fase) {
-		items.sum({it.producto.calcularCoeficienteProduccion(fase)})
+		this.items.sum({it.producto.calcularCoeficienteProduccion(fase)})
 	}
-	
+	def getTotalToneladas(){
+		Map<Producto,Integer>paquetesTotales= new TreeMap<Producto,Integer>();
+		this.items.each {
+			if(paquetesTotales.get(it.producto)!=null){
+				println paquetesTotales.get(it.paquetepedido)
+				Integer val=paquetesTotales.get(it.producto)
+				val+=it.paquete.capacidad*it.cantidad
+				paquetesTotales.put(it.producto, val)
+				println paquetesTotales.get(it.producto)
+			}else{
+				paquetesTotales.put(it.producto,it.paquete.capacidad*it.cantidad)
+			}
+		}
+		return paquetesTotales
+		
+	}
+	public List<SobrantePedido> getSobrantePedido(){
+		return SobrantePedido.findAllByPedido(this)
+	}
 	public Duration calcularDuracion(Maquina mq){
 		long d = mq.fase.duracion.millis * mq.rendimiento * this.calcularCoeficienteProduccion(mq.fase)
 		new Duration(d)
