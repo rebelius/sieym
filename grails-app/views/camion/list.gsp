@@ -3,19 +3,12 @@
 <!doctype html>
 <html>
 	<head>
-		<meta name="layout" content="main">
+		<meta name="layout" content="config">
 		<g:set var="entityName" value="${message(code: 'camion.label', default: 'Camion')}" />
 		<title><g:message code="default.list.label" args="[entityName]" /></title>
 	</head>
 	<body>
-		<div class="nav side" role="navigation">
-			<ul>
-				<li><a href="${createLink(uri: '/logistica')}"><g:message code="default.config.logistica.label"/></a></li>
-				<li><a href="${createLink(uri: '/logistica')}"><g:message code="default.config.materiaprima.label"/></a></li>
-				<li><a href="${createLink(uri: '/logistica')}"><g:message code="default.config.maquinas.label"/></a></li>
-				<li><a href="${createLink(uri: '/logistica')}"><g:message code="default.config.fases.label"/></a></li>
-			</ul>
-		</div>
+		
 		<div class="nav" role="navigation">
 			<ul>
 				<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>

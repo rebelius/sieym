@@ -51,11 +51,10 @@ class PedidoGeneralService {
 		def fechaPedidoTerminado = resPorFase[fases.last()]['intervalo'].end.plus(tiempoEmpaquetado)
 //		pedido.estado = EstadoPedido.Planificado
 //		pedido.save(flush: true)
+		pedido.estado=EstadoPedido.Planificado
+		pedido.save(flush:true)
 		[fases: fases, reservas: resPorFase, tiempoEmpaquetado: tiempoEmpaquetado,
 			fechaPedidoTerminado: fechaPedidoTerminado]
-//			pedido.estado=EstadoPedido.Planificado
-//			pedido.save(flush:true)
-		
 	}
 	def generarReservasPorFase(Pedido pedido, fases,int ton) {
 //		def desde = new DateTime()

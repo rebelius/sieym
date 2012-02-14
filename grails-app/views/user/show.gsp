@@ -52,7 +52,7 @@
 				<li class="fieldcontain">
 					<span id="address-label" class="property-label"><g:message code="user.address.label" default="Username" /></span>
 					
-						<span class="property-value" aria-labelledby="address-label"><g:fieldValue bean="${userInstance}" field="address"/></span>
+						<span class="property-value" aria-labelledby="address-label"><g:fieldValue bean="${userInstance}" field="username"/></span>
 					
 				</li>
 				</g:if>
