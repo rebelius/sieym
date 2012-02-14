@@ -9,8 +9,8 @@
 	<body>
 		<div class="nav side" role="navigation">
 			<ul>
-				<li><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
-				<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
+				<li><g:link class="list" action="list"><g:message code="userL.list.label" args="[entityName]" /></g:link></li>
+				<li><g:link class="create" action="create"><g:message code="userL.new.label" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
 		<div id="create-user" class="content scaffold-create" role="main">

@@ -9,7 +9,7 @@ class User {
 	Integer dni
 	String username
 	String email
-	String phone
+	Integer phone
 	String address
 	String password
 	Role role

@@ -8,7 +8,7 @@ class Camion {
 	static belongsTo = Logistica
 	
 	String marca
-	String modelo
+	Integer modelo
 	String patente
 	String chofer
 	boolean disponible
