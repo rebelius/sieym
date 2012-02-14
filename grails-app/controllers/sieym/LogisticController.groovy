@@ -45,7 +45,17 @@ class LogisticController {
 			redirect(action: "list1")
 		}
 	}
-	
+	def show() {
+		def camionInstance = Camion.get(params.id)
+		if (!camionInstance) {
+			flash.message = message(code: 'default.not.found.message', args: [message(code: 'camion.label', default: 'Camion'), params.id])
+			redirect(action: "list")
+			return
+		}
+
+		[camionInstance: camionInstance]
+	}
+
     def asignar() {
         def camionInstance =  Camion.get(params?.idCamion)
         def pedidoInstance =  Pedido.get(params?.id)
