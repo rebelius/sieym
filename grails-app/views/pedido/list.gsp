@@ -76,34 +76,36 @@
 
 						<td>
 						<g:if test="${pedidoInstance?.estado== EstadoPedido.Solicitado }">
-						<g:form >
-							<g:hiddenField name="id" value="${pedidoInstance?.id}" />
-							<g:hiddenField name="estado" value="${estado}" />
-							<field>${fieldValue(bean: pedidoInstance, field: "id")}</field>
-							<g:actionSubmit action="pasarAceptado"
-								value="Aceptar"
-								onclick="return confirm('${message(code: 'default.button.aceptar.confirm.message', default: 'Esta seguro que desea aceptar este elemento?')}');" />
-							<g:actionSubmit id="rechazar" class="edit" value="Rechazar" />
-							
-						</g:form>
-						
-						
-						<div id="rechazo" style="display: none;" title="Motivo">
-							<g:form>
-								<g:hiddenField name="id" value="${pedidoInstance?.id}" />
-								<g:hiddenField id="estado2" name="estado" value="Rechazado" />
-								<g:textArea name="motivoRechazo"></g:textArea>
-								<g:actionSubmit class="edit" action="update" value="Rechazar" />
-							</g:form>
-						</div>
-						<g:javascript>
-						$(document).ready(function() {
-							$('#rechazar').click(function() {
-							    $('#rechazo').dialog({modal:true});
-							    return false;
-							});
-						});
-						</g:javascript>
+						<field>${fieldValue(bean: pedidoInstance, field: "id")}</field>
+						<g:if test="${session.user.role!=sieym.Role.USER}">	
+								<g:form >
+									<g:hiddenField name="id" value="${pedidoInstance?.id}" />
+									<g:hiddenField name="estado" value="${estado}" />
+									<g:actionSubmit action="pasarAceptado"
+										value="Aceptar"
+										onclick="return confirm('${message(code: 'default.button.aceptar.confirm.message', default: 'Esta seguro que desea aceptar este elemento?')}');" />
+									<g:actionSubmit id="rechazar" class="edit" value="Rechazar" />
+									
+								</g:form>
+								
+								
+								<div id="rechazo" style="display: none;" title="Motivo">
+									<g:form>
+										<g:hiddenField name="id" value="${pedidoInstance?.id}" />
+										<g:hiddenField id="estado2" name="estado" value="Rechazado" />
+										<g:textArea name="motivoRechazo"></g:textArea>
+										<g:actionSubmit class="edit" action="update" value="Rechazar" />
+									</g:form>
+								</div>
+								<g:javascript>
+								$(document).ready(function() {
+									$('#rechazar').click(function() {
+									    $('#rechazo').dialog({modal:true});
+									    return false;
+									});
+								});
+								</g:javascript>
+							</g:if>
 						</g:if>
 						<g:else>
 							<g:link action="show" id="${pedidoInstance.id}">

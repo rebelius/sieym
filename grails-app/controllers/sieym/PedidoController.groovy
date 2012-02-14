@@ -157,7 +157,7 @@ class PedidoController {
 					html "Su pedido Numero" +pedidoInstance+" a sido aceptado.Muchas Gracias"
 				}
 			}catch (Exception e){
-				println ""
+				println  "No se pudo enviar el mail"
 			
 			}
 			
@@ -230,7 +230,7 @@ class PedidoController {
 					html "Su pedido Numero" +pedidoInstance+" a sido Rechazado.Por Favor Contactese con la Empresa Muchas Gracias"
 				}
 			}catch (Exception e){
-				println ""
+				println "No se pudo enviar el mail"
 			
 			}
 			return
