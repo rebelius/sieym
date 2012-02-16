@@ -27,33 +27,38 @@ class EstimacionPlanificacionJob {
 				def maquina=it.maquina
 				pedido.fase=maquina.fase
 				pedido.estado=EstadoPedido.Produccion
+				def sob=SobrantePedido.findAllByPedido(it.pedido)
+				Map<Producto,Integer>productosTotalesPorTonelada=(TreeMap<Producto,Integer>)pedido.getTotalToneladas()
+				sob.each {
+					def prf=it.producto
+					def can=it.cantidad
+					productosTotalesPorTonelada.put(prf, productosTotalesPorTonelada.get(prf)-can)
+				}
+				int ton= RealPedido.findAllByPedido(pedido).sum({it.cantidad	})
+				
+				int sobrante=it.maquina.capacidad-ton
+				if (sobrante>0 &&ton!=0){
+					println "hay sobrante"
+					productosTotalesPorTonelada.each() { key, value ->
+						println ton
+						println value
+						println sobrante
+						int total=(value/ton)*sobrante
+						def sob1=Sobrante.findByProducto(key)?:new Sobrante(maquina:it.maquina,producto:key)
+						if(sob1?.cantidad){
+							sob1.cantidad+=total
+						}else{
+							sob1.cantidad=total
+						}
+						sob1.save(flush:true)
+						println sob1 as JSON
+					}
+				}
 			}else{
 				pedido.fase=null
 				pedido.estado=EstadoPedido.Embolsado
 			}
-			def sob=SobrantePedido.findAllByPedido(it.pedido).sum({it.cantidad	})
-			Map<Producto,Integer>productosTotalesPorTonelada=(TreeMap<Producto,Integer>)pedido.getTotalToneladas()
-			sob.each {
-				def prf=it.producto
-				def can=it.cantidad
-				productosTotalesPorTonelada.put(prf, productosTotalesPorTonelada.get(prf)-can)
-			}
-			int ton= RealPedido.findAllByPedido(pedido).sum({it.cantidad	})
-			int sobrante=it.maquina.capacidad-ton
-			if (sobrante>0){
-				println "hay sobrante"
-				productosTotalesPorTonelada.each() { key, value ->
-					int total=(value/ton)*sobrante
-					def sob1=Sobrante.findByProducto(key)?:new Sobrante(maquina:it.maquina,producto:key)
-					if(sob1?.cantidad){
-						sob1.cantidad+=total
-					}else{
-						sob1.cantidad=total
-					}
-					sob1.save(flush:true)
-					println sob1 as JSON
-				}
-			}
+
 			pedido.save(flush:true)
 			
 		}

@@ -20,16 +20,19 @@ class PedidoGeneralService {
 		sobrantesDisponibles.each {
 				//se pasa a no disponible se le asgna el pedido y paso a setear el sobrante 
 				Integer sobra=it.cantidad
-				
-				if (sobra>paquetesTotales.get(it.producto)){
-					new SobrantePedido(producto:it.producto,cantidad:paquetesTotales.get(it.producto),pedido:pedido).save(flush:true)
-					new RealPedido(producto:it.producto,cantidad:0,pedido:pedido).save(flush:true)
-					it.cantidad-=paquetesTotales.get(it.producto)
-					
-				}else {
-					new SobrantePedido(producto:it.producto,cantidad:sobra,pedido:pedido).save(flush:true)
-					new RealPedido(producto:it.producto,cantidad:paquetesTotales.get(it.producto)-sobra,pedido:pedido).save(flush:true)
-					it.cantidad=0
+				if(paquetesTotales.get(it.producto)!=null){
+					if (sobra>paquetesTotales.get(it.producto)){
+						new SobrantePedido(producto:it.producto,cantidad:paquetesTotales.get(it.producto),pedido:pedido).save(flush:true)
+						new RealPedido(producto:it.producto,cantidad:0,pedido:pedido).save(flush:true)
+						println paquetesTotales.get(it.producto)
+						println it.producto
+						it.cantidad-=paquetesTotales.get(it.producto)
+						
+					}else {
+						new SobrantePedido(producto:it.producto,cantidad:sobra,pedido:pedido).save(flush:true)
+						new RealPedido(producto:it.producto,cantidad:paquetesTotales.get(it.producto)-sobra,pedido:pedido).save(flush:true)
+						it.cantidad=0
+					}
 				}
 				it.save(flush:true)
 				
