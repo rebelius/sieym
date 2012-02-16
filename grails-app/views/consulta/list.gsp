@@ -96,7 +96,7 @@
 
 						<td><g:formatDate date="${pedidoInstance.fechaPedido}"
 								format="dd/MM/yyyy" /></td>
-						<td>&nbsp;</td>
+						<td>${pedidoInstance.fase.nombre}</td>
 						<td>&nbsp;</td>
 					</tr>
 				</g:each>
@@ -124,7 +124,7 @@
 							<strong style="color: blue"> 
 							${fieldValue(bean: faseInstance, field: "nombre")}</strong>  --
 							
-						</g:each>
+						</g:each><strong style="color: blue"> Empaquetado</strong> 	
 					</td>
 				
 				</tr>

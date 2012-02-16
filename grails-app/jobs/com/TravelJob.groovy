@@ -9,21 +9,23 @@ class TravelJob {
     def execute() {
 		def dat= new Date()
 		def log=Logistica.get(1)
-		EstadoPedido es=EstadoPedido.EnViaje
-		Pedido.findAllByEstado( es).each {
-			Long l= it.km*log.tiempoPorKm
-			def d= it.lastModifiedDate.getTime()
-			def ff=d +l
-			
-			if(ff<dat.getTime()){
-				println "--------------------------"
-				println "Se proceso el registro " +it
-				println "--------------------------"
-				it.estado =EstadoPedido.Entregado
-				it.camion.disponible=true
-				it.save(flush:true)
+		Pedido.list( ).each {
+			if(it.estado==EstadoPedido.EnViaje){
+				Long l= it.km*log.tiempoPorKm
+				def d= it.lastModifiedDate.getTime()
+				def ff=d +l
 				
+				if(ff<dat.getTime()){
+					println "--------------------------"
+					println "Se proceso el registro " +it
+					println "--------------------------"
+					it.estado =EstadoPedido.Entregado
+					it.camion.disponible=true
+					it.save(flush:true)
+					
+				}
 			}
+		
 		}
 		
 		

@@ -75,15 +75,15 @@ class BootStrap {
 		fases*.save()
 		this.fases = fases
 
-		Maquina mq1 =  Maquina.findByDescripcion('MQ_SAP_60') ?:new Maquina(descripcion: "MQ_SAP_60", fase: sapecado, capacidad: 60, rendimiento: 0.6)
+		Maquina mq1 =  Maquina.findByDescripcion('MQ_SAP_60') ?:new Maquina(descripcion: "MQ_SAP_60", fase: sapecado, capacidad: 601, rendimiento: 0.6)
 		Maquina mq2 = Maquina.findByDescripcion('MQ_SAP_120') ?:new Maquina(descripcion: "MQ_SAP_120", fase: sapecado, capacidad: 120, rendimiento: 0.72)
 		Maquina mq3 = Maquina.findByDescripcion('MQ_SAP_50') ?:new Maquina(descripcion: "MQ_SAP_50", fase: sapecado, capacidad: 50, rendimiento: 0.82)
 
-		Maquina mq4 = Maquina.findByDescripcion('MQ_CAN_100') ?:new Maquina(descripcion: "MQ_CAN_100", fase: canchado, capacidad: 100, rendimiento: 0.6)
+		Maquina mq4 = Maquina.findByDescripcion('MQ_CAN_100') ?:new Maquina(descripcion: "MQ_CAN_100", fase: canchado, capacidad: 1010, rendimiento: 0.6)
 		Maquina mq5 = Maquina.findByDescripcion('MQ_CAN_120') ?:new Maquina(descripcion: "MQ_CAN_120", fase: canchado, capacidad: 120, rendimiento: 0.72)
 		Maquina mq7 = Maquina.findByDescripcion('MQ_CAN_80') ?:new Maquina(descripcion: "MQ_CAN_80", fase: canchado, capacidad: 80, rendimiento: 0.82)
 
-		Maquina mq6 = Maquina.findByDescripcion('MQ_MOL_150') ?:new Maquina(descripcion: "MQ_MOL_150", fase: molienda, capacidad: 150, rendimiento: 0.82)
+		Maquina mq6 = Maquina.findByDescripcion('MQ_MOL_150') ?:new Maquina(descripcion: "MQ_MOL_150", fase: molienda, capacidad: 1150, rendimiento: 0.82)
 		Maquina mq8 = Maquina.findByDescripcion('MQ_MOL_90') ?:new Maquina(descripcion: "MQ_MOL_90", fase: molienda, capacidad: 90, rendimiento: 0.88)
 		Maquina mq9 = Maquina.findByDescripcion('MQ_MOL_60') ?:new Maquina(descripcion: "MQ_MOL_60", fase: molienda, capacidad: 60, rendimiento: 0.75)
 
@@ -97,21 +97,20 @@ class BootStrap {
 		[mp1, mp2, mp3, mp4]*.save(flush: true)
 		println mp1.errors
 
-		Producto pA =  Producto.findByNombre('Producto A') ?:new Producto(nombre: "Producto A", composicion:
-				[
-					new ComponenteProducto(porcentaje: 25, materiaPrima: mp1),
-					new ComponenteProducto(porcentaje: 20, materiaPrima: mp2),
-					new ComponenteProducto(porcentaje: 55, materiaPrima: mp3)
-				])
+		Producto pA =  Producto.findByNombre('Producto A') ?:new Producto(nombre: "Producto A")
 
-		Producto pB = Producto.findByNombre('Producto B') ?:new Producto(nombre: "Producto B", composicion:
-				[
-					new ComponenteProducto(porcentaje: 52, materiaPrima: mp2),
-					new ComponenteProducto(porcentaje: 48, materiaPrima: mp4)
-				])
+		Producto pB = Producto.findByNombre('Producto B') ?:new Producto(nombre: "Producto B")
+		
 		def productos = [pA, pB]
 		productos*.save()
-
+		ComponenteProducto css=ComponenteProducto.findByProductoAndMateriaPrima(pA,mp1)?:new ComponenteProducto(producto:pA,porcentaje: 25, materiaPrima: mp1)
+		ComponenteProducto css1=ComponenteProducto.findByProductoAndMateriaPrima(pB,mp2)?:new ComponenteProducto(producto:pA,porcentaje: 25, materiaPrima: mp2)
+		css.save(flush:true)
+		css1.save(flush:true)
+		
+		
+		
+		
 		MateriaPrima sal = MateriaPrima.findByNombre('Sal') ?: new MateriaPrima(nombre: 'Sal', descripcion: 'Para salar').save()
 		MateriaPrima pimienta = MateriaPrima.findByNombre('Pimienta') ?: new MateriaPrima(nombre: 'Pimienta', descripcion: 'Para pimentar').save()
 
@@ -121,24 +120,7 @@ class BootStrap {
 		Paquete paq2 =Paquete.findByName('B') ?:  new Paquete(name: "B", descripcion: "Paquete tipo B", capacidad: 10,cantidad:20, tiempoArmado: Duration.standardMinutes(20))
 		paq2.save()
 
-		if( Producto.findByNombre('Sal y Pimienta')==null){
-			Producto p = new Producto(nombre: 'Sal y Pimienta')
-			p.save()
-
-			if (!p.coeficiente.contains(sal)) {
-				ComponenteProducto.create p, sal,60
-			}
-			if (!p.coeficiente.contains(pimienta)) {
-				ComponenteProducto.create p, pimienta,40
-			}
-			EstadoPedido.values()[0..4].each { def ep ->
-				2.times { def time ->
-					def items = [new ItemPedido(producto: p, paquete: paq, cantidad: 5 * (1 + time) * (1 + ep.ordinal()))]
-					Pedido ped = new Pedido(cliente: user, items: items, estado: ep, fechaPedido: new Date(), direccionEntrega: "Pichincha 1234", km: 100)
-					ped.save()
-				}
-			}
-		}
+	
 
 //		def items = [new ItemPedido(producto: pA, paquete: paq2, cantidad: 10)]
 //		Pedido ped = new Pedido(cliente: user, items: items, estado: EstadoPedido.Señado, fechaPedido: new Date(), direccionEntrega: "Formosa 1234")

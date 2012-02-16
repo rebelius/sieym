@@ -12,7 +12,9 @@ class Producto implements Comparable{
 //		getCoeficiente().sum({it.materiaPrima.coeficiente(fase) * (it.porcentaje / 100)})
 		float ff=0f
 		getCoeficiente().each{
-			ff+=it.materiaPrima.coeficiente(fase)
+			if(it?.materiaPrima?.coeficiente(fase)){
+				ff+=it.materiaPrima.coeficiente(fase)
+			}
 		}
 		return ff
 	}

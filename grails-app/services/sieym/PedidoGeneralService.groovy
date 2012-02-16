@@ -49,6 +49,10 @@ class PedidoGeneralService {
 		def resPorFase = this.generarReservasPorFase(pedido, fases,ton)
 		def tiempoEmpaquetado = pedido.cacularTiempoEmpaquetado()
 		def fechaPedidoTerminado = resPorFase[fases.last()]['intervalo'].end.plus(tiempoEmpaquetado)
+		def res = new ReservaMaquina(pedido: pedido)
+		def intervalo = new Interval(resPorFase[fases.last()]['intervalo'].end,  tiempoEmpaquetado)
+		res.intervalo=intervalo
+		res.save(flush:true)
 //		pedido.estado = EstadoPedido.Planificado
 //		pedido.save(flush: true)
 		pedido.estado=EstadoPedido.Planificado
@@ -58,7 +62,7 @@ class PedidoGeneralService {
 	}
 	def generarReservasPorFase(Pedido pedido, fases,int ton) {
 //		def desde = new DateTime()
-		def desde = null
+		def desde = new DateTime()
 		fases.collectEntries { Fase fase ->
 			def maquinas = Maquina.findAllByFase(fase)
 			def res = generarReserva(pedido, fase, desde, maquinas,ton)
@@ -102,7 +106,7 @@ class PedidoGeneralService {
 	}
 	
 	def reservarMaquina(def mq, def pedido, def intervalo) {
-		def res = new ReservaMaquina(pedido: pedido)
+		def res = new ReservaMaquina(pedido: pedido,maquina:mq)
 		res.intervalo = intervalo
 		mq.addToReservas(res).save(flush: true)
 		return res

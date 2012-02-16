@@ -31,7 +31,7 @@
 			</h3>
 			<h3 style="margin-top: 10px;color:blue">
 				SALIDA DE PRODUCCIÓN:
-				<strong><joda:format value="${plan.fechaPedidoTerminado}" pattern="dd/MM/yyyy - hh:mm" /></strong>
+				<strong><joda:format value="${plan.fechaPedidoTerminado}" pattern="dd/MM/yyyy - hh:mm:ss" /></strong>
 			</h3>
 			<h2 style="margin-top: 10px;">Cronograma de Producción</h2>
 
@@ -53,11 +53,11 @@
 						<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 							<td>${fase.nombre}</td>
 
-							<td>${plan.reservas[(fase)].maquinas}</td>
+							<td>${plan.reservas[(fase)]?.maquinas?:'TIEMPO DE EMPAQUETADO'}</td>
 
-							<td><joda:format value="${plan.reservas[(fase)].intervalo.start}" pattern="dd/MM/yyyy - hh:mm" /></td>
+							<td><joda:format value="${plan.reservas[(fase)].intervalo.start}" pattern="dd/MM/yyyy - hh:mm:ss" /></td>
 							
-							<td><joda:format value="${plan.reservas[(fase)].intervalo.end}" pattern="dd/MM/yyyy - hh:mm" /></td>
+							<td><joda:format value="${plan.reservas[(fase)].intervalo.end}" pattern="dd/MM/yyyy - hh:mm:ss" /></td>
 
 						</tr>
 
@@ -66,7 +66,7 @@
 			</table>
 
 			<p style="margin: 10px;">
-				TIEMPO DE EMPAQUETADO=<strong>${plan.tiempoEmpaquetado.standardSeconds} millsSeconds / ${plan.tiempoEmpaquetado.standardSeconds/60} seg</strong>
+				TIEMPO DE EMPAQUETADO=<strong>${plan.tiempoEmpaquetado.standardSeconds} Segundos </strong>
 			
 			</p>
 
