@@ -18,19 +18,15 @@ class LogisticController {
 	def list1() {
 		params.max = Math.min(params.max ? params.int('max') : 10, 100)
 
-		EstadoPedido es= EstadoPedido.Proceso
-		def pedidos = Pedido.findAllByEstado(es)
-		pedidos.each {
-			it.estado= EstadoPedido.Embolsado
-			it.save()
-		}
+		EstadoPedido es= EstadoPedido.Listo
+
 //		Camion.list().each{
 //		it.disponible=true
 //		it.save()
 //			
 //		}
-		[pedidoInstanceList: Pedido.findAllByEstado( EstadoPedido.Embolsado, params), pedidoInstanceTotal: Pedido.countByEstado( EstadoPedido.Embolsado),
-			estado: EstadoPedido.Embolsado]
+		[pedidoInstanceList: Pedido.findAllByEstado( EstadoPedido.Listo, params), pedidoInstanceTotal: Pedido.countByEstado( EstadoPedido.Listo),
+			estado: EstadoPedido.Listo]
 	
 	}
 	

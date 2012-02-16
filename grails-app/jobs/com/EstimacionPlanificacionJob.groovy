@@ -63,8 +63,12 @@ class EstimacionPlanificacionJob {
 			
 		}
 		ReservaMaquina.findAllByEndLessThan( dat).each {
-			def fases = Fase.listOrderById()
 		
+			if(!it?.maquina){
+				def pedido=it.pedido
+				pedido.estado=EstadoPedido.Listo
+				pedido.save(flush:true)
+			}
 			it.delete()
 		}
 		

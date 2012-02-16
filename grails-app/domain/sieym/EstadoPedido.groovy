@@ -8,6 +8,7 @@ public enum EstadoPedido {
 	Planificado,
 	Produccion,
 	Embolsado,
+	Listo,
 	EnViaje,
 	Rechazado,
 	Cancelado,

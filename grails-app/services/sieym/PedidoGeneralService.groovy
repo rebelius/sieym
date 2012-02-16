@@ -59,7 +59,9 @@ class PedidoGeneralService {
 //		pedido.estado = EstadoPedido.Planificado
 //		pedido.save(flush: true)
 		pedido.estado=EstadoPedido.Planificado
+		pedido.fechaEntrega=fechaPedidoTerminado.toDate()
 		pedido.save(flush:true)
+		
 		[fases: fases, reservas: resPorFase, tiempoEmpaquetado: tiempoEmpaquetado,
 			fechaPedidoTerminado: fechaPedidoTerminado]
 	}

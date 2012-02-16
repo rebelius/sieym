@@ -8,6 +8,7 @@
 <g:set var="entityName"
 	value="${message(code: 'pedido.label', default: 'Pedido')}" />
 <title><g:message code="default.consulta.label" args="[entityName]" /></title>
+
 </head>
 <body>
 
@@ -65,7 +66,7 @@
 					<g:sortableColumn property="fase"
 						title="${message(code: 'pedido.fase.label', default: 'Fase')}" />
 					<g:sortableColumn property="tiempo"
-						title="${message(code: 'pedido.fase.label', default: 'Tiempo estimado a Produccion')}" />
+						title="${message(code: 'pedido.fase.label', default: 'Tiempo salida de Producción')}" />
 
 
 				</tr>
@@ -95,9 +96,40 @@
 						</td>
 
 						<td><g:formatDate date="${pedidoInstance.fechaPedido}"
-								format="dd/MM/yyyy" /></td>
+								format="dd/MM/yyyy - hh:mm:ss" /></td>
 						<td>${pedidoInstance.fase.nombre}</td>
-						<td>&nbsp;</td>
+						<td><g:formatDate date="${pedidoInstance.fechaEntrega}"
+								format="dd/MM/yyyy - hh:mm:ss" /></td>
+					</tr>
+				</g:each>
+				<g:each in="${ped}" status="i" var="sssd">
+					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
+
+						<td>
+					
+								${fieldValue(bean: sssd, field: "id")}
+						
+							
+						</td>
+
+						<td>
+							${fieldValue(bean: sssd, field: "cliente.name")}
+						</td>
+						<td>
+							${fieldValue(bean: sssd, field: "cliente.dni")}
+						</td>
+						
+
+						<td>
+							${sssd.estado.name()}
+							
+						</td>
+
+						<td><g:formatDate date="${sssd.fechaPedido}"
+								format="dd/MM/yyyy - hh:mm:ss" /></td>
+						<td></td>
+						<td><g:formatDate date="${sssd.fechaEntrega}"
+								format="dd/MM/yyyy - hh:mm:ss" /></td>
 					</tr>
 				</g:each>
 			</tbody>
