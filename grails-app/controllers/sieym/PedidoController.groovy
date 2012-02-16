@@ -217,7 +217,11 @@ class PedidoController {
 		if(prevSeña == null && pedidoInstance.seña != null) {
 			pedidoInstance.estado = EstadoPedido.Señado
 		}
-
+		if(pedidoInstance.estado == EstadoPedido.Cancelado){
+			ReservaMaquina.findAllByPedido(pedidoInstance).each{
+				it.delete()
+			}
+		}
 		if (!pedidoInstance.save(flush: true)) {
 			render(view: "edit", model: [pedidoInstance: pedidoInstance])
 			
