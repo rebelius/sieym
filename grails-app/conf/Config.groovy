@@ -65,7 +65,6 @@ environments {
     }
     production {
         grails.logging.jul.usebridge = false
-        grails.serverURL = "http://190.19.20.149:8080/sieym"
     }
 }
 

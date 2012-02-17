@@ -4,8 +4,10 @@ dataSource {
 //	username = "sa"
 //	password = ""
     driverClassName = "com.mysql.jdbc.Driver"
-    username = "sieym"
-    password = "sieyM1s"
+//    username = "sieym"
+//    password = "sieyM1s"
+	username = "root"
+	password = "toor
 	properties {
 		maxActive = 50
 		maxIdle = 25
