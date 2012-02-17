@@ -26,18 +26,19 @@ class BootStrap {
 	def fases
 
 	def init = { servletContext ->
-//		def admin = User.findByUsername('admin') ?: new User(
-//				name: "Admin User",
-//				dni: 66666666,
-//				username: "admin",
-//				email: "admin@sieym.com",
-//				phone: 45555555,
-//				address: "Street 1000",
-//				password: "shhhh",
-//				active: true,
-//				role: Role.ADMIN
-//				);
-//		admin.save()
+		def admin = User.findByUsername('admin') ?: new User(
+				name: "Admin User",
+				dni: 66666666,
+				username: "admin",
+				email: "admin@sieym.com",
+				phone: 45555555,
+				address: "Street 1000",
+				password: "shhhh",
+				active: true,
+				role: Role.ADMIN
+				);
+		admin.save()
+		def log =Logistica.get(1)?:new Logistica(precioPorKm: 250, tiempoPorKm: 1.5).save()
 //		println admin.errors
 //		def user = User.findByUsername('user') ?: new User(
 //				name: "user",
@@ -66,7 +67,6 @@ class BootStrap {
 //		operador.save()
 //		println operador.errors
 //		
-//		new Logistica(precioPorKm: 250, tiempoPorKm: 1.5).save()
 //
 //		Fase sapecado = Fase.findByNombre('Sapecado') ?: new Fase(nombre: "Sapecado", duracion: Duration.standardHours(9))
 //		Fase canchado = Fase.findByNombre('Canchado') ?: new Fase(nombre: "Canchado", duracion: Duration.standardHours(10))
