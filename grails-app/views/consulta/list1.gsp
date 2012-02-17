@@ -66,7 +66,7 @@
 					<g:sortableColumn property="fechaPedido"
 						title="${message(code: 'pedido.fechaPedido.label', default: 'Fecha Pedido')}" />
 					<g:sortableColumn property="tiempo"
-						title="${message(code: 'pedido.fase.label', default: 'Tiempo salida de Producción')}" />
+						title="${message(code: 'pedido.fase.label', default: 'Tiempo de Llegada Destino')}" />
 
 
 				</tr>
