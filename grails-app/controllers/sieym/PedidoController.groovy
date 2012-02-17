@@ -63,17 +63,32 @@ class PedidoController {
 
 	def list() {
 		params.max = Math.min(params.max ? params.int('max') : 10, 100)
-		if(params.estado) {
-			EstadoPedido estado = EstadoPedido.valueOf(params.estado)
-			[pedidoInstanceList: Pedido.findAllByEstado(estado, params), pedidoInstanceTotal: Pedido.countByEstado(estado),estado:estado]
-		} else {
-			EstadoPedido estado = EstadoPedido.Planificado
-			Pedido.findAllByEstado(estado, params).each{
-//			it.estado=EstadoPedido.Entregado
-//			it.save(flush:true)
+		if(session.user.role==sieym.Role.USER){
+			if(params.estado) {
+				EstadoPedido estado = EstadoPedido.valueOf(params.estado)
+				[pedidoInstanceList: Pedido.findAllByEstadoAndCliente(estado,session.user, params), pedidoInstanceTotal: Pedido.countByEstadoAndCliente(estado,session.user),estado:estado]
+			} else {
+				EstadoPedido estado = EstadoPedido.Planificado
+				Pedido.findAllByEstado(estado, params).each{
+	//			it.estado=EstadoPedido.Entregado
+	//			it.save(flush:true)
+				}
+				[pedidoInstanceList: Pedido.findAllByCliente(session.user,params), pedidoInstanceTotal: Pedido.countByCliente(session.user)]
 			}
-			[pedidoInstanceList: Pedido.list(params), pedidoInstanceTotal: Pedido.count()]
+		}else{
+			if(params.estado) {
+				EstadoPedido estado = EstadoPedido.valueOf(params.estado)
+				[pedidoInstanceList: Pedido.findAllByEstado(estado, params), pedidoInstanceTotal: Pedido.countByEstado(estado),estado:estado]
+			} else {
+				EstadoPedido estado = EstadoPedido.Planificado
+				Pedido.findAllByEstado(estado, params).each{
+	//			it.estado=EstadoPedido.Entregado
+	//			it.save(flush:true)
+				}
+				[pedidoInstanceList: Pedido.list(params), pedidoInstanceTotal: Pedido.count()]
+			}
 		}
+		
 	}
 
 	def create() {

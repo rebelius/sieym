@@ -24,7 +24,7 @@
 	<body>
 		<div id="header" role="banner">
 		
-        	<a href="<g:createLink controller="index"/>"  style="width: 80%;padding:1px 1px 1px 21px;"><img src="${resource(dir:'images',file:'Logo SIEYM.png')}" alt="DineroTaxi.com" title="DineroTaxi.com" border="0" /></a>
+        	<a href="<g:createLink controller="pedido"/>"  style="width: 80%;padding:1px 1px 1px 21px;"><img src="${resource(dir:'images',file:'Logo SIEYM.png')}" alt="DineroTaxi.com" title="DineroTaxi.com" border="0" /></a>
 		
 			<g:if test="${session.user}">
 			<font align="right" style="padding:1px 1px 1px 266px;font-size: 15px">

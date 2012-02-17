@@ -55,11 +55,10 @@ class LogisticController {
     def asignar() {
         def camionInstance =  Camion.get(params?.idCamion)
         def pedidoInstance =  Pedido.get(params?.id)
-		if(camionInstance?.disponible && pedidoInstance?.estado ==EstadoPedido.Embolsado){
+		if(camionInstance?.disponible && pedidoInstance?.estado ==EstadoPedido.Listo){
 			camionInstance.disponible=false
 			pedidoInstance.estado =EstadoPedido.EnViaje
 			pedidoInstance.camion=camionInstance
-			pedidoInstance.save(flush:true)
 			if(!pedidoInstance.save(flush:true) || !camionInstance.save(flush:true)){
 				flash.error ="No se pudo asignar intentelo nuevamente"
 				redirect(action: "list2", id: pedidoInstance.id)
