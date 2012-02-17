@@ -63,16 +63,20 @@ class PedidoController {
 
 	def list() {
 		params.max = Math.min(params.max ? params.int('max') : 10, 100)
+		
+//		EstadoPedido e22s = EstadoPedido.Entregado
+//
+//		Pedido.findAllByEstado(e22s, params).each{
+//					it.estado=EstadoPedido.Listo
+//					it.save(flush:true)
+//					}
 		if(session.user.role==sieym.Role.USER){
 			if(params.estado) {
 				EstadoPedido estado = EstadoPedido.valueOf(params.estado)
 				[pedidoInstanceList: Pedido.findAllByEstadoAndCliente(estado,session.user, params), pedidoInstanceTotal: Pedido.countByEstadoAndCliente(estado,session.user),estado:estado]
 			} else {
 				EstadoPedido estado = EstadoPedido.Planificado
-				Pedido.findAllByEstado(estado, params).each{
-	//			it.estado=EstadoPedido.Entregado
-	//			it.save(flush:true)
-				}
+
 				[pedidoInstanceList: Pedido.findAllByCliente(session.user,params), pedidoInstanceTotal: Pedido.countByCliente(session.user)]
 			}
 		}else{
@@ -167,12 +171,12 @@ class PedidoController {
 			try{
 				mailService.sendMail {
 					to session.user.email
-					from conf.ui.register.emailFrom
-					subject conf.ui.register.emailSubject
+					from "sieym.s.a@gmail.com"
+					subject "Pedido Acpetado"
 					html "Su pedido Numero" +pedidoInstance+" a sido aceptado.Muchas Gracias"
 				}
 			}catch (Exception e){
-				println  "No se pudo enviar el mail"
+				println  e
 			
 			}
 			
@@ -244,12 +248,12 @@ class PedidoController {
 			try{
 				mailService.sendMail {
 					to session.user.email
-					from conf.ui.register.emailFrom
-					subject conf.ui.register.emailSubject
+					from "sieym.s.a@gmail.com"
+					subject "Pedido Rechazado"
 					html "Su pedido Numero" +pedidoInstance+" a sido Rechazado.Por Favor Contactese con la Empresa Muchas Gracias"
 				}
 			}catch (Exception e){
-				println "No se pudo enviar el mail"
+				println e
 			
 			}
 			return

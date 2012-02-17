@@ -7,7 +7,7 @@
 <meta name="layout" content="mainLR">
 <g:set var="entityName"
 	value="${message(code: 'pedido.label', default: 'Pedido')}" />
-<title><g:message code="default.consulta.label" args="[entityName]" /></title>
+<title>Pedidos En Viaje</title>
 
 </head>
 <body>
@@ -18,7 +18,7 @@
 			<g:if test="${flash.error}">
 			<div class="errors" role="status">${flash.error}</div>
 			</g:if>
-		<div class="nav side" role="navigation">
+	<div class="nav side" role="navigation">
 			<ul>
 				<li><a href="${createLink(uri: '/consulta')}">Pedidos en Produccion </a></li>
 				<li><a href="${createLink(uri: '/consulta/list1')}">Pedidos en Viaje</a></li>
@@ -43,7 +43,7 @@
 
 		</div>
 		<h1>
-			<g:message code="default.consulta.label" args="[entityName]" />
+		Listado de Pedidos en Viaje
 		</h1>
 		<g:if test="${flash.message}">
 			<div class="message" role="status">
@@ -65,8 +65,6 @@
 
 					<g:sortableColumn property="fechaPedido"
 						title="${message(code: 'pedido.fechaPedido.label', default: 'Fecha Pedido')}" />
-					<g:sortableColumn property="fase"
-						title="${message(code: 'pedido.fase.label', default: 'Fase')}" />
 					<g:sortableColumn property="tiempo"
 						title="${message(code: 'pedido.fase.label', default: 'Tiempo salida de Producción')}" />
 
@@ -99,7 +97,6 @@
 
 						<td><g:formatDate date="${pedidoInstance.fechaPedido}"
 								format="dd/MM/yyyy - hh:mm:ss" /></td>
-						<td>${pedidoInstance.fase.nombre}</td>
 						<td><g:formatDate date="${pedidoInstance.fechaEntrega}"
 								format="dd/MM/yyyy - hh:mm:ss" /></td>
 					</tr>
@@ -140,34 +137,6 @@
 			<g:paginate total="${pedidoInstanceTotal}" params="${params }"/>
 		</div>
 		
-		<br>
-		<br>
-		<br>
-		<table>
-			<thead>
-				<tr style="font-size: 15px">
-					<th >Total Fases Produccion</th>
-					
-				</tr>
-			</thead>
-			<tbody>
-				<tr class="odd">
-					<td>
-						<g:each in="${faseInstanceList}" status="i" var="faseInstance">
-							
-							<strong style="color: blue"> 
-							${fieldValue(bean: faseInstance, field: "nombre")}</strong>  --
-							
-						</g:each><strong style="color: blue"> Empaquetado</strong> 	
-					</td>
-				
-				</tr>
-			
-			</tbody>
-		</table>
-		<br>
-		<br>
-		<br>
 	</div>
 </body>
 </html>

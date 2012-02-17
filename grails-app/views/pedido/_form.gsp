@@ -35,13 +35,6 @@
 	<g:textField name="km" required="" value="${pedidoInstance?.km}"/>
 </div>
 	
-<div class="fieldcontain ${hasErrors(bean: pedidoInstance, field: 'recibirAvisos', 'error')} ">
-	<label for="recibirAvisos">
-		<g:message code="pedido.recibirAvisos.label" default="Recibir Avisos" />
-		
-	</label>
-	<g:checkBox name="recibirAvisos" value="${pedidoInstance?.recibirAvisos}" />
-</div>
 
 
 

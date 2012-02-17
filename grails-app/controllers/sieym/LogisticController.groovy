@@ -1,5 +1,7 @@
 package sieym
 
+import org.joda.time.DateTime;
+import org.joda.time.Duration;
 import org.springframework.dao.DataIntegrityViolationException
 import sieym.EstadoPedido
 class LogisticController {
@@ -55,9 +57,14 @@ class LogisticController {
     def asignar() {
         def camionInstance =  Camion.get(params?.idCamion)
         def pedidoInstance =  Pedido.get(params?.id)
+		def log=Logistica.get(1)
 		if(camionInstance?.disponible && pedidoInstance?.estado ==EstadoPedido.Listo){
 			camionInstance.disponible=false
 			pedidoInstance.estado =EstadoPedido.EnViaje
+			int l= pedidoInstance.km*log.tiempoPorKm
+			
+			def fechaFin = new DateTime().plusSeconds(l)
+			pedidoInstance.fechaEntrega=fechaFin.toDate()
 			pedidoInstance.camion=camionInstance
 			if(!pedidoInstance.save(flush:true) || !camionInstance.save(flush:true)){
 				flash.error ="No se pudo asignar intentelo nuevamente"

@@ -95,9 +95,9 @@ log4j = {
 
 grails {
 	mail {
-		host = "smtpout.asia.secureserver.net "
-		port = 465
-		username = "sieym.s.a@gmail.com"
+        host = "smtp.gmail.com"
+        port = 465
+        username = "sieym.s.a@gmail.com"
 		password = "sieym123!"
 		props = ["mail.smtp.auth":"true",
 					"mail.smtp.socketFactory.port":"465",
